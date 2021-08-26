@@ -5,7 +5,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 /** @type {import('next').NextConfig} */
 module.exports = withBundleAnalyzer({
     reactStrictMode: true,
-    pageExtensions: [ 'ts', 'tsx', 'md', 'mdx' ],
+    pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
     webpack: (config, { dev, isServer }) => {
         config.module.rules.push({
             test: /\.(png|jpe?g|gif|mp4)$/i,
