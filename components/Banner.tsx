@@ -16,7 +16,7 @@ const variants = {
 const Banner: React.FC<bannerProps> = ({ downClick }) => {
     return (
         <div className="relative w-full h-screen bg-fixed">
-            <div className="w-full h-full bg-blue-400 bg-no-repeat bg-cover"
+            <div className="w-full h-full bg-no-repeat bg-cover"
                  style={{ backgroundImage: 'url(/static/images/2021-02-17-01.png)' }}/>
 
             <div className="absolute bottom-4 w-full text-white text-4xl flex justify-center">

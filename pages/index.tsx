@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Element, Events, scroller } from 'react-scroll';
 import SectionContainer from '@/components/SectionContainer';
 import Banner from '@/components/Banner';
@@ -17,7 +17,7 @@ const Home: NextPage = () => {
             Events.scrollEvent.remove('begin');
             Events.scrollEvent.remove('end');
         };
-    });
+    }, []);
 
     const downClick = () => {
         scroller.scrollTo('container', {

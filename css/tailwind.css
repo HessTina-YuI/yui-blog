@@ -9,18 +9,17 @@
     }
 
     .scroll-theme::-webkit-scrollbar {
-        width: 8px; /* y轴滚动条宽度 */
-        height: 8px; /* x轴滚动条高度 */
+        width: 10px;
+        /*display: none;*/
     }
 
     .scroll-theme::-webkit-scrollbar-thumb {
-        border-radius: 10px; /* 滚动条的圆角 */
-        background: #40a9ff; /* 滚动条的背景颜色 */
+        border-radius: 10px;
+        background: #111111;
     }
 
     .scroll-theme::-webkit-scrollbar-track {
-        border-radius: 10px; /* 滚动条的背景区域的圆角 */
-        background: #eeeeee; /* 滚动条的背景颜色 */
+        background: #eeeeee;
     }
 
     .overscroll-y-none {
@@ -33,18 +32,16 @@
         }
 
         .scroll-theme-dark::-webkit-scrollbar {
-            width: 8px; /* y轴滚动条宽度 */
-            height: 8px; /* x轴滚动条高度 */
+            width: 10px;
         }
 
         .scroll-theme-dark::-webkit-scrollbar-thumb {
-            border-radius: 10px; /* 滚动条的圆角 */
-            background: #40a9ff; /* 滚动条的背景颜色 */
+            border-radius: 10px;
+            background: #eeeeee;
         }
 
         .scroll-theme-dark::-webkit-scrollbar-track {
-            border-radius: 10px; /* 滚动条的背景区域的圆角 */
-            background: #111111; /* 滚动条的背景颜色 */
+            background: #111111;
         }
     }
 }
