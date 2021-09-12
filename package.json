@@ -11,6 +11,7 @@
     "lint": "next lint --fix --dir pages --dir components --dir lib --dir layouts --dir scripts"
   },
   "dependencies": {
+    "boxicons": "^2.0.9",
     "framer-motion": "^4.1.17",
     "next": "11.1.0",
     "next-themes": "^0.0.15",

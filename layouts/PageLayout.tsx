@@ -15,7 +15,7 @@ const variants = {
 
 const PageLayout: React.FC<Props> = ({ children }) => {
     return (
-        <motion.main
+        <motion.div
             initial="hidden"
             animate="enter"
             exit="exit"
@@ -25,7 +25,7 @@ const PageLayout: React.FC<Props> = ({ children }) => {
                     {children}
                 </Fragment>
             </AnimatePresence>
-        </motion.main>
+        </motion.div>
 
     );
 };
