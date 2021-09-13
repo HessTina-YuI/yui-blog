@@ -42,7 +42,7 @@ const Navbar: React.FC = ({ children }) => {
     };
 
     return (
-        <div>
+        <>
             <nav
                 className="h-full px-6 fixed top-0 left-0 z-10 text-white text-2xl bg-black transition-all duration-500"
                 style={{ width: `${navWidth}rem` }}>
@@ -95,7 +95,7 @@ const Navbar: React.FC = ({ children }) => {
                   style={{ width: `calc(100% - ${navWidth}rem)`, left: `${navWidth}rem` }}>
                 {children}
             </main>
-        </div>
+        </>
     );
 };
 
