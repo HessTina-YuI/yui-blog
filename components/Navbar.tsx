@@ -11,6 +11,23 @@ import {
     BiUser
 } from 'react-icons/bi';
 
+type SpanComponentProps = {
+    navDisplay: Boolean;
+}
+
+const LiComponent: React.FC = ({ children }) =>
+    <li className="w-full h-10 my-4 pl-1 rounded-lg flex items-center
+        hover:bg-white hover:text-black hover:cursor-pointer duration-500">
+        {children}
+    </li>;
+
+const SpanComponent: React.FC<SpanComponentProps> = ({ navDisplay, children }) =>
+    <span
+        className={`whitespace-nowrap text-xl ml-3 transition-opacity duration-500 
+        ${navDisplay ? 'opacity-100' : 'opacity-0'}`}>
+        {children}
+    </span>;
+
 const Navbar: React.FC = ({ children }) => {
 
     const [navWidth, setNavWidth] = useState<Number>(15);
@@ -36,69 +53,42 @@ const Navbar: React.FC = ({ children }) => {
                     </div>
                 </div>
                 <ul className="list-none">
-                    <li className="w-full h-10 my-4 pl-1.5 rounded-lg flex items-center hover:bg-white hover:text-black hover:cursor-pointer duration-500">
+                    <LiComponent>
                         <span><BiSearch/></span>
-                        <span
-                            className={`whitespace-nowrap text-xl ml-3 -translate-y-0.5 transition-opacity duration-500 ${navDisplay ? 'opacity-100' : 'opacity-0'}`}>
-                            Search
-                        </span>
-                    </li>
-                    <li className="w-full h-10 my-4 pl-1.5 rounded-lg flex items-center hover:bg-white hover:text-black hover:cursor-pointer duration-500">
+                        <SpanComponent navDisplay={navDisplay}>Search</SpanComponent>
+                    </LiComponent>
+                    <LiComponent>
                         <span><BiGridAlt/></span>
-                        <span
-                            className={`whitespace-nowrap text-xl ml-3 -translate-y-0.5 transition-opacity duration-500 ${navDisplay ? 'opacity-100' : 'opacity-0'}`}>
-                            Dashboard
-                        </span>
-                    </li>
-                    <li className="w-full h-10 my-4 pl-1.5 rounded-lg flex items-center hover:bg-white hover:text-black hover:cursor-pointer duration-500">
+                        <SpanComponent navDisplay={navDisplay}>Dashboard</SpanComponent>
+                    </LiComponent>
+                    <LiComponent>
                         <span><BiUser/></span>
-                        <span
-                            className={`whitespace-nowrap text-xl ml-3 -translate-y-0.5 transition-opacity duration-500 ${navDisplay ? 'opacity-100' : 'opacity-0'}`}>
-                            User
-                        </span>
-                    </li>
-                    <li className="w-full h-10 my-4 pl-1.5 rounded-lg flex items-center hover:bg-white hover:text-black hover:cursor-pointer duration-500">
+                        <SpanComponent navDisplay={navDisplay}>User</SpanComponent>
+                    </LiComponent>
+                    <LiComponent>
                         <span><BiChat/></span>
-                        <span
-                            className={`whitespace-nowrap text-xl ml-3 -translate-y-0.5 transition-opacity duration-500 ${navDisplay ? 'opacity-100' : 'opacity-0'}`}>
-                            Messages
-                        </span>
-                    </li>
-                    <li className="w-full h-10 my-4 pl-1.5 rounded-lg flex items-center hover:bg-white hover:text-black hover:cursor-pointer duration-500">
+                        <SpanComponent navDisplay={navDisplay}>Messages</SpanComponent>
+                    </LiComponent>
+                    <LiComponent>
                         <span><BiPieChartAlt2/></span>
-                        <span
-                            className={`whitespace-nowrap text-xl ml-3 -translate-y-0.5 transition-opacity duration-500 ${navDisplay ? 'opacity-100' : 'opacity-0'}`}>
-                            Analytics
-                        </span>
-                    </li>
-                    <li className="w-full h-10 my-4 pl-1.5 rounded-lg flex items-center hover:bg-white hover:text-black hover:cursor-pointer duration-500">
+                        <SpanComponent navDisplay={navDisplay}>Analytics</SpanComponent>
+                    </LiComponent>
+                    <LiComponent>
                         <span><BiFolder/></span>
-                        <span
-                            className={`whitespace-nowrap text-xl ml-3 -translate-y-0.5 transition-opacity duration-500 ${navDisplay ? 'opacity-100' : 'opacity-0'}`}>
-                            File Manager
-                        </span>
-                    </li>
-                    <li className="w-full h-10 my-4 pl-1.5 rounded-lg flex items-center hover:bg-white hover:text-black hover:cursor-pointer duration-500">
+                        <SpanComponent navDisplay={navDisplay}>File Manager</SpanComponent>
+                    </LiComponent>
+                    <LiComponent>
                         <span><BiCartAlt/></span>
-                        <span
-                            className={`whitespace-nowrap text-xl ml-3 -translate-y-0.5 transition-opacity duration-500 ${navDisplay ? 'opacity-100' : 'opacity-0'}`}>
-                            Order
-                        </span>
-                    </li>
-                    <li className="w-full h-10 my-4 pl-1.5 rounded-lg flex items-center hover:bg-white hover:text-black hover:cursor-pointer duration-500">
+                        <SpanComponent navDisplay={navDisplay}>Order</SpanComponent>
+                    </LiComponent>
+                    <LiComponent>
                         <span><BiHeart/></span>
-                        <span
-                            className={`whitespace-nowrap text-xl ml-3 -translate-y-0.5 transition-opacity duration-500 ${navDisplay ? 'opacity-100' : 'opacity-0'}`}>
-                            Saved
-                        </span>
-                    </li>
-                    <li className="w-full h-10 my-4 pl-1.5 rounded-lg flex items-center hover:bg-white hover:text-black hover:cursor-pointer duration-500">
+                        <SpanComponent navDisplay={navDisplay}>Saved</SpanComponent>
+                    </LiComponent>
+                    <LiComponent>
                         <span><BiCog/></span>
-                        <span
-                            className={`whitespace-nowrap text-xl ml-3 -translate-y-0.5 transition-opacity duration-500 ${navDisplay ? 'opacity-100' : 'opacity-0'}`}>
-                            Setting
-                        </span>
-                    </li>
+                        <SpanComponent navDisplay={navDisplay}>Setting</SpanComponent>
+                    </LiComponent>
                 </ul>
             </nav>
             <main className="relative transition-all duration-500"
