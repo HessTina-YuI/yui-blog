@@ -4,22 +4,12 @@
 
 @layer utilities {
 
-    .scroll-theme {
+    .no-scroll-theme {
 
     }
 
-    .scroll-theme::-webkit-scrollbar {
-        width: 10px;
-        /*display: none;*/
-    }
-
-    .scroll-theme::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        background: #111111;
-    }
-
-    .scroll-theme::-webkit-scrollbar-track {
-        background: #eeeeee;
+    .no-scroll-theme::-webkit-scrollbar {
+        display: none;
     }
 
     .overscroll-y-none {
@@ -27,21 +17,6 @@
     }
 
     @variants dark {
-        .scroll-theme-dark {
 
-        }
-
-        .scroll-theme-dark::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        .scroll-theme-dark::-webkit-scrollbar-thumb {
-            border-radius: 10px;
-            background: #eeeeee;
-        }
-
-        .scroll-theme-dark::-webkit-scrollbar-track {
-            background: #111111;
-        }
     }
 }

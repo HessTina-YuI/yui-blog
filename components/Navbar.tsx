@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import {
+    BiArrowToLeft, BiArrowToRight,
     BiCartAlt,
     BiChat,
     BiCog,
     BiFolder,
     BiGridAlt,
-    BiHeart, BiMenu,
+    BiHeart,
     BiPieChartAlt2,
     BiSearch,
     BiUser
 } from 'react-icons/bi';
 
 type SpanComponentProps = {
-    navDisplay: Boolean;
+    navOpen: Boolean;
 }
 
 const LiComponent: React.FC = ({ children }) =>
@@ -21,73 +22,100 @@ const LiComponent: React.FC = ({ children }) =>
         {children}
     </li>;
 
-const SpanComponent: React.FC<SpanComponentProps> = ({ navDisplay, children }) =>
+const SpanComponent: React.FC<SpanComponentProps> = ({ navOpen, children }) =>
     <span
         className={`whitespace-nowrap text-xl ml-3 transition-opacity duration-500 
-        ${navDisplay ? 'opacity-100' : 'opacity-0'}`}>
+        ${navOpen ? 'opacity-100' : 'opacity-0'}`}>
         {children}
     </span>;
+
+let waitAnimationEnd = true;
 
 const Navbar: React.FC = ({ children }) => {
 
     const [navWidth, setNavWidth] = useState<Number>(15);
-    const [navDisplay, setNavDisplay] = useState<Boolean>(true);
+    const [navOpen, setNavOpen] = useState<Boolean>(true);
+    const [navMouseOn, setNavMouseOn] = useState<Boolean>(false);
 
     useEffect(() => {
-        navDisplay ? setNavWidth(15) : setNavWidth(5);
-    }, [navDisplay]);
+        navOpen ? setNavWidth(15) : setNavWidth(5);
+    }, [navOpen]);
 
-    const navDisplayClick = () => {
-        setNavDisplay(!navDisplay);
+    const navOpenClick = () => {
+        setNavOpen(!navOpen);
+
+        setNavMouseOn(false);
+        waitAnimationEnd = false;
+        setTimeout(() => {
+            waitAnimationEnd = true;
+        }, 500);
+    };
+
+    const navMouseEnter = () => {
+        waitAnimationEnd ? setNavMouseOn(true) : '';
+    };
+
+    const navMouseLeave = () => {
+        waitAnimationEnd ? setNavMouseOn(false) : '';
     };
 
     return (
         <>
+            <div
+                className={`w-12 h-12 rounded-xl rotate-45 transition-all duration-500 ease-in-out hover:cursor-pointer
+                            fixed z-10 top-16 bg-black ${navMouseOn ? '-translate-x-7' : '-translate-x-14'}`}
+                style={{ left: `${navWidth}rem` }} onMouseEnter={navMouseEnter} onMouseLeave={navMouseLeave}
+                onClick={navOpenClick}>
+                <div className="-rotate-45">
+                    {navOpen ?
+                        <BiArrowToLeft className="text-xl text-white translate-x-4 translate-y-2"/> :
+                        <BiArrowToRight className="text-xl text-white translate-x-4 translate-y-2"/>
+                    }
+                </div>
+            </div>
             <nav
-                className="h-full px-6 fixed top-0 left-0 z-10 text-white text-2xl bg-black transition-all duration-500"
-                style={{ width: `${navWidth}rem` }}>
+                className="h-full px-6 fixed top-0 left-0 z-20 text-white text-2xl bg-black transition-all duration-500 overflow-y-scroll no-scroll-theme"
+                style={{ width: `${navWidth}rem` }} onMouseEnter={navMouseEnter} onMouseLeave={navMouseLeave}>
                 <div className="mt-2 mb-4">
-                    <div className="w-full h-10 my-2 pl-1.5 rounded-lg flex items-center hover:cursor-pointer"
-                         onClick={navDisplayClick}>
-                        <span><BiMenu/></span>
+                    <div className="w-full h-20 my-2 pl-1.5 rounded-lg flex items-center hover:cursor-pointer">
                     </div>
                 </div>
                 <ul className="list-none">
                     <LiComponent>
                         <span><BiSearch/></span>
-                        <SpanComponent navDisplay={navDisplay}>Search</SpanComponent>
+                        <SpanComponent navOpen={navOpen}>Search</SpanComponent>
                     </LiComponent>
                     <LiComponent>
                         <span><BiGridAlt/></span>
-                        <SpanComponent navDisplay={navDisplay}>Dashboard</SpanComponent>
+                        <SpanComponent navOpen={navOpen}>Dashboard</SpanComponent>
                     </LiComponent>
                     <LiComponent>
                         <span><BiUser/></span>
-                        <SpanComponent navDisplay={navDisplay}>User</SpanComponent>
+                        <SpanComponent navOpen={navOpen}>User</SpanComponent>
                     </LiComponent>
                     <LiComponent>
                         <span><BiChat/></span>
-                        <SpanComponent navDisplay={navDisplay}>Messages</SpanComponent>
+                        <SpanComponent navOpen={navOpen}>Messages</SpanComponent>
                     </LiComponent>
                     <LiComponent>
                         <span><BiPieChartAlt2/></span>
-                        <SpanComponent navDisplay={navDisplay}>Analytics</SpanComponent>
+                        <SpanComponent navOpen={navOpen}>Analytics</SpanComponent>
                     </LiComponent>
                     <LiComponent>
                         <span><BiFolder/></span>
-                        <SpanComponent navDisplay={navDisplay}>File Manager</SpanComponent>
+                        <SpanComponent navOpen={navOpen}>File Manager</SpanComponent>
                     </LiComponent>
                     <LiComponent>
                         <span><BiCartAlt/></span>
-                        <SpanComponent navDisplay={navDisplay}>Order</SpanComponent>
+                        <SpanComponent navOpen={navOpen}>Order</SpanComponent>
                     </LiComponent>
                     <LiComponent>
                         <span><BiHeart/></span>
-                        <SpanComponent navDisplay={navDisplay}>Saved</SpanComponent>
+                        <SpanComponent navOpen={navOpen}>Saved</SpanComponent>
                     </LiComponent>
                     <LiComponent>
                         <span><BiCog/></span>
-                        <SpanComponent navDisplay={navDisplay}>Setting</SpanComponent>
+                        <SpanComponent navOpen={navOpen}>Setting</SpanComponent>
                     </LiComponent>
                 </ul>
             </nav>
