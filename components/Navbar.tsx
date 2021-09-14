@@ -52,11 +52,11 @@ const Navbar: React.FC = ({ children }) => {
     };
 
     const navMouseEnter = () => {
-        waitAnimationEnd ? setNavMouseOn(true) : '';
+        waitAnimationEnd ? setNavMouseOn(true) : null;
     };
 
     const navMouseLeave = () => {
-        waitAnimationEnd ? setNavMouseOn(false) : '';
+        waitAnimationEnd ? setNavMouseOn(false) : null;
     };
 
     return (
