@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
     BiArrowToLeft, BiArrowToRight,
-    BiCartAlt,
-    BiChat,
-    BiCog,
-    BiFolder,
-    BiGridAlt,
-    BiHeart,
-    BiPieChartAlt2,
-    BiSearch,
-    BiUser
+    BiCartAlt, BiChat, BiUser,
+    BiCog, BiFolder, BiGridAlt,
+    BiHeart, BiPieChartAlt2
 } from 'react-icons/bi';
 
 type SpanComponentProps = {
@@ -29,7 +23,7 @@ const SpanComponent: React.FC<SpanComponentProps> = ({ navOpen, children }) =>
         {children}
     </span>;
 
-let waitAnimationEnd = true;
+let waitAnimationEnd: Boolean = true;
 
 const Navbar: React.FC = ({ children }) => {
 
@@ -61,30 +55,14 @@ const Navbar: React.FC = ({ children }) => {
 
     return (
         <>
-            <div
-                className={`w-12 h-12 rounded-xl rotate-45 transition-all duration-500 ease-in-out hover:cursor-pointer
-                            fixed z-10 top-16 bg-black ${navMouseOn ? '-translate-x-7' : '-translate-x-14'}`}
-                style={{ left: `${navWidth}rem` }} onMouseEnter={navMouseEnter} onMouseLeave={navMouseLeave}
-                onClick={navOpenClick}>
-                <div className="-rotate-45">
-                    {navOpen ?
-                        <BiArrowToLeft className="text-xl text-white translate-x-4 translate-y-2"/> :
-                        <BiArrowToRight className="text-xl text-white translate-x-4 translate-y-2"/>
-                    }
-                </div>
-            </div>
             <nav
                 className="h-full px-6 fixed top-0 left-0 z-20 text-white text-2xl bg-black transition-all duration-500 overflow-y-scroll no-scroll-theme"
                 style={{ width: `${navWidth}rem` }} onMouseEnter={navMouseEnter} onMouseLeave={navMouseLeave}>
-                <div className="mt-2 mb-4">
-                    <div className="w-full h-20 my-2 pl-1.5 rounded-lg flex items-center hover:cursor-pointer">
+                <div className="w-full h-32 mt-2 mb-4">
+                    <div className="my-2 pl-1.5 rounded-lg flex items-center hover:cursor-pointer">
                     </div>
                 </div>
                 <ul className="list-none">
-                    <LiComponent>
-                        <span><BiSearch/></span>
-                        <SpanComponent navOpen={navOpen}>Search</SpanComponent>
-                    </LiComponent>
                     <LiComponent>
                         <span><BiGridAlt/></span>
                         <SpanComponent navOpen={navOpen}>Dashboard</SpanComponent>
@@ -119,6 +97,18 @@ const Navbar: React.FC = ({ children }) => {
                     </LiComponent>
                 </ul>
             </nav>
+            <div
+                className={`w-12 h-12 rounded-xl rotate-45 transition-all duration-500 ease-in-out hover:cursor-pointer
+                            fixed z-10 top-16 bg-black ${navMouseOn ? '-translate-x-7' : '-translate-x-14'}`}
+                style={{ left: `${navWidth}rem` }} onMouseEnter={navMouseEnter} onMouseLeave={navMouseLeave}
+                onClick={navOpenClick}>
+                <div className="-rotate-45">
+                    {navOpen ?
+                        <BiArrowToLeft className="text-xl text-white translate-x-4 translate-y-2"/> :
+                        <BiArrowToRight className="text-xl text-white translate-x-4 translate-y-2"/>
+                    }
+                </div>
+            </div>
             <main className="relative transition-all duration-500"
                   style={{ width: `calc(100% - ${navWidth}rem)`, left: `${navWidth}rem` }}>
                 {children}
