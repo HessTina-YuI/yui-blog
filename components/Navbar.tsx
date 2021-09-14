@@ -5,6 +5,7 @@ import {
     BiCog, BiFolder, BiGridAlt,
     BiHeart, BiPieChartAlt2
 } from 'react-icons/bi';
+import NavbarItem from '@/components/NavbarItem';
 
 type SpanComponentProps = {
     navOpen: Boolean;
@@ -45,7 +46,7 @@ const Navbar: React.FC = ({ children }) => {
         }, 500);
     };
 
-    const navMouseEnter = () => {
+    const navMouseOver = () => {
         waitAnimationEnd ? setNavMouseOn(true) : null;
     };
 
@@ -56,51 +57,43 @@ const Navbar: React.FC = ({ children }) => {
     return (
         <>
             <nav
-                className="h-full px-6 fixed top-0 left-0 z-20 text-white text-2xl bg-black transition-all duration-500 overflow-y-scroll no-scroll-theme"
-                style={{ width: `${navWidth}rem` }} onMouseEnter={navMouseEnter} onMouseLeave={navMouseLeave}>
+                className="h-full px-6 fixed top-0 left-0 z-20 text-white text-2xl bg-black transition-all duration-500 overflow-visible"
+                style={{ width: `${navWidth}rem` }} onMouseOver={navMouseOver} onMouseLeave={navMouseLeave}>
                 <div className="w-full h-32 mt-2 mb-4">
                     <div className="my-2 pl-1.5 rounded-lg flex items-center hover:cursor-pointer">
                     </div>
                 </div>
-                <ul className="list-none">
-                    <LiComponent>
-                        <span><BiGridAlt/></span>
-                        <SpanComponent navOpen={navOpen}>Dashboard</SpanComponent>
-                    </LiComponent>
-                    <LiComponent>
-                        <span><BiUser/></span>
-                        <SpanComponent navOpen={navOpen}>User</SpanComponent>
-                    </LiComponent>
-                    <LiComponent>
-                        <span><BiChat/></span>
-                        <SpanComponent navOpen={navOpen}>Messages</SpanComponent>
-                    </LiComponent>
-                    <LiComponent>
-                        <span><BiPieChartAlt2/></span>
-                        <SpanComponent navOpen={navOpen}>Analytics</SpanComponent>
-                    </LiComponent>
-                    <LiComponent>
-                        <span><BiFolder/></span>
-                        <SpanComponent navOpen={navOpen}>File Manager</SpanComponent>
-                    </LiComponent>
-                    <LiComponent>
-                        <span><BiCartAlt/></span>
-                        <SpanComponent navOpen={navOpen}>Order</SpanComponent>
-                    </LiComponent>
-                    <LiComponent>
-                        <span><BiHeart/></span>
-                        <SpanComponent navOpen={navOpen}>Saved</SpanComponent>
-                    </LiComponent>
-                    <LiComponent>
-                        <span><BiCog/></span>
-                        <SpanComponent navOpen={navOpen}>Setting</SpanComponent>
-                    </LiComponent>
-                </ul>
+                <div>
+                    <NavbarItem.Item navOpen={navOpen} title="Dashboard">
+                        <NavbarItem.Icon><BiGridAlt/></NavbarItem.Icon>
+                    </NavbarItem.Item>
+                    <NavbarItem.Item navOpen={navOpen} title="User">
+                        <NavbarItem.Icon><BiUser/></NavbarItem.Icon>
+                    </NavbarItem.Item>
+                    <NavbarItem.Item navOpen={navOpen} title="Messages">
+                        <NavbarItem.Icon><BiChat/></NavbarItem.Icon>
+                    </NavbarItem.Item>
+                    <NavbarItem.Item navOpen={navOpen} title="Analytics">
+                        <NavbarItem.Icon><BiPieChartAlt2/></NavbarItem.Icon>
+                    </NavbarItem.Item>
+                    <NavbarItem.Item navOpen={navOpen} title="File Manager">
+                        <NavbarItem.Icon><BiFolder/></NavbarItem.Icon>
+                    </NavbarItem.Item>
+                    <NavbarItem.Item navOpen={navOpen} title="Order">
+                        <NavbarItem.Icon><BiCartAlt/></NavbarItem.Icon>
+                    </NavbarItem.Item>
+                    <NavbarItem.Item navOpen={navOpen} title="Saved">
+                        <NavbarItem.Icon><BiHeart/></NavbarItem.Icon>
+                    </NavbarItem.Item>
+                    <NavbarItem.Item navOpen={navOpen} title="Setting">
+                        <NavbarItem.Icon><BiCog/></NavbarItem.Icon>
+                    </NavbarItem.Item>
+                </div>
             </nav>
             <div
                 className={`w-12 h-12 rounded-xl rotate-45 transition-all duration-500 ease-in-out hover:cursor-pointer
                             fixed z-10 top-16 bg-black ${navMouseOn ? '-translate-x-7' : '-translate-x-14'}`}
-                style={{ left: `${navWidth}rem` }} onMouseEnter={navMouseEnter} onMouseLeave={navMouseLeave}
+                style={{ left: `${navWidth}rem` }} onMouseOver={navMouseOver} onMouseLeave={navMouseLeave}
                 onClick={navOpenClick}>
                 <div className="-rotate-45">
                     {navOpen ?
