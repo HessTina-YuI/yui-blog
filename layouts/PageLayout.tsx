@@ -10,7 +10,7 @@ const variants = {
     hidden: { opacity: 0 },
     enter: { opacity: 1 },
     exit: { opacity: 0 },
-    transition: { type: 'linear', delay: 2, duration: .8 }
+    transition: { type: 'easy-in-out', delay: 2, duration: 1 }
 };
 
 const PageLayout: React.FC<Props> = ({ children }) => {

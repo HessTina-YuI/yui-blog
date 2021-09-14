@@ -1,40 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import {
-    BiArrowToLeft, BiArrowToRight,
-    BiCartAlt, BiChat, BiUser,
-    BiCog, BiFolder, BiGridAlt,
-    BiHeart, BiPieChartAlt2
+    BiArrowToLeft, BiArrowToRight, BiHomeAlt,
+    BiBookContent, BiHistory, BiPencil, BiBox
 } from 'react-icons/bi';
 import NavbarItem from '@/components/NavbarItem';
+import { Url } from 'url';
 
-type SpanComponentProps = {
-    navOpen: Boolean;
-}
-
-const LiComponent: React.FC = ({ children }) =>
-    <li className="w-full h-10 my-4 pl-1 rounded-lg flex items-center
-        hover:bg-white hover:text-black hover:cursor-pointer duration-500">
-        {children}
-    </li>;
-
-const SpanComponent: React.FC<SpanComponentProps> = ({ navOpen, children }) =>
-    <span
-        className={`whitespace-nowrap text-xl ml-3 transition-opacity duration-500 
-        ${navOpen ? 'opacity-100' : 'opacity-0'}`}>
-        {children}
-    </span>;
-
-let waitAnimationEnd: Boolean = true;
+let waitAnimationEnd: boolean = true;
+const initWidth = 10;
+const narrowWidth = 5;
 
 const Navbar: React.FC = ({ children }) => {
 
-    const [navWidth, setNavWidth] = useState<Number>(15);
-    const [navOpen, setNavOpen] = useState<Boolean>(true);
-    const [navMouseOn, setNavMouseOn] = useState<Boolean>(false);
+    const router = useRouter();
+    const [navWidth, setNavWidth] = useState<number>(initWidth);
+    const [navOpen, setNavOpen] = useState<boolean>(true);
+    const [navMouseOn, setNavMouseOn] = useState<boolean>(false);
 
     useEffect(() => {
-        navOpen ? setNavWidth(15) : setNavWidth(5);
+        navOpen ? setNavWidth(initWidth) : setNavWidth(narrowWidth);
     }, [navOpen]);
+
+    const navRouteClick = (url: Url | string) => {
+        router.replace(url).then(r => r ? null : console.error(`${url} is  ${r}`));
+    };
 
     const navOpenClick = () => {
         setNavOpen(!navOpen);
@@ -64,29 +54,20 @@ const Navbar: React.FC = ({ children }) => {
                     </div>
                 </div>
                 <div>
-                    <NavbarItem.Item navOpen={navOpen} title="Dashboard">
-                        <NavbarItem.Icon><BiGridAlt/></NavbarItem.Icon>
+                    <NavbarItem.Item navOpen={navOpen} title="首页" onClick={() => navRouteClick('/')}>
+                        <NavbarItem.Icon><BiHomeAlt/></NavbarItem.Icon>
                     </NavbarItem.Item>
-                    <NavbarItem.Item navOpen={navOpen} title="User">
-                        <NavbarItem.Icon><BiUser/></NavbarItem.Icon>
+                    <NavbarItem.Item navOpen={navOpen} title="文章" onClick={() => navRouteClick('/test')}>
+                        <NavbarItem.Icon><BiBookContent/></NavbarItem.Icon>
                     </NavbarItem.Item>
-                    <NavbarItem.Item navOpen={navOpen} title="Messages">
-                        <NavbarItem.Icon><BiChat/></NavbarItem.Icon>
+                    <NavbarItem.Item navOpen={navOpen} title="记录" onClick={() => navRouteClick('/history')}>
+                        <NavbarItem.Icon><BiHistory/></NavbarItem.Icon>
                     </NavbarItem.Item>
-                    <NavbarItem.Item navOpen={navOpen} title="Analytics">
-                        <NavbarItem.Icon><BiPieChartAlt2/></NavbarItem.Icon>
+                    <NavbarItem.Item navOpen={navOpen} title="故事" onClick={() => navRouteClick('/story')}>
+                        <NavbarItem.Icon><BiPencil/></NavbarItem.Icon>
                     </NavbarItem.Item>
-                    <NavbarItem.Item navOpen={navOpen} title="File Manager">
-                        <NavbarItem.Icon><BiFolder/></NavbarItem.Icon>
-                    </NavbarItem.Item>
-                    <NavbarItem.Item navOpen={navOpen} title="Order">
-                        <NavbarItem.Icon><BiCartAlt/></NavbarItem.Icon>
-                    </NavbarItem.Item>
-                    <NavbarItem.Item navOpen={navOpen} title="Saved">
-                        <NavbarItem.Icon><BiHeart/></NavbarItem.Icon>
-                    </NavbarItem.Item>
-                    <NavbarItem.Item navOpen={navOpen} title="Setting">
-                        <NavbarItem.Icon><BiCog/></NavbarItem.Icon>
+                    <NavbarItem.Item navOpen={navOpen} title="收藏" onClick={() => navRouteClick('/collector')}>
+                        <NavbarItem.Icon><BiBox/></NavbarItem.Icon>
                     </NavbarItem.Item>
                 </div>
             </nav>

@@ -1,8 +1,9 @@
-import React, { useMemo, useState } from 'react';
+import React, { MouseEventHandler, useMemo, useState } from 'react';
 
-type ItemProps = {
-    navOpen: Boolean
-    title: String
+type ItemProps<T> = {
+    navOpen: boolean
+    title: string
+    onClick?: MouseEventHandler<T> | undefined;
 }
 
 const Icon: React.FC = ({ children }) => {
@@ -13,7 +14,7 @@ const Icon: React.FC = ({ children }) => {
     );
 };
 
-const Item: React.FC<ItemProps> = ({ navOpen, title, children }) => {
+const Item: React.FC<ItemProps<any>> = ({ navOpen, title, onClick, children }) => {
 
     const item = useMemo(() => {
         let item = {
@@ -38,7 +39,7 @@ const Item: React.FC<ItemProps> = ({ navOpen, title, children }) => {
         return item;
     }, [children]);
 
-    const [iconMouseOn, setIconMouseOn] = useState<Boolean>(false);
+    const [iconMouseOn, setIconMouseOn] = useState<boolean>(false);
 
     const iconMouseOver = () => {
         setIconMouseOn(true);
@@ -51,8 +52,8 @@ const Item: React.FC<ItemProps> = ({ navOpen, title, children }) => {
     return (
         <div className="w-full h-10 my-4 relative flex items-center">
             <div className="w-full h-full my-4 pl-1 rounded-lg flex items-center
-                hover:bg-white hover:text-black hover:cursor-pointer duration-500"
-                 onMouseOver={iconMouseOver} onMouseLeave={iconMouseLeave}>
+                    hover:bg-white hover:text-black hover:cursor-pointer duration-500"
+                 onMouseOver={iconMouseOver} onMouseLeave={iconMouseLeave} onClick={onClick}>
                 {item.icon ? item.icon : null}
                 <span className={`whitespace-nowrap text-xl ml-3 transition-opacity duration-500
                         ${navOpen ? 'opacity-100' : 'opacity-0'}`}>
