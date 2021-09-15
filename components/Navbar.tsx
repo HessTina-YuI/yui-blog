@@ -57,7 +57,7 @@ const Navbar: React.FC = ({ children }) => {
                     <NavbarItem.Item navOpen={navOpen} title="首页" onClick={() => navRouteClick('/')}>
                         <NavbarItem.Icon><BiHomeAlt/></NavbarItem.Icon>
                     </NavbarItem.Item>
-                    <NavbarItem.Item navOpen={navOpen} title="文章" onClick={() => navRouteClick('/test')}>
+                    <NavbarItem.Item navOpen={navOpen} title="文章" onClick={() => navRouteClick('/article')}>
                         <NavbarItem.Icon><BiBookContent/></NavbarItem.Icon>
                     </NavbarItem.Item>
                     <NavbarItem.Item navOpen={navOpen} title="记录" onClick={() => navRouteClick('/history')}>
