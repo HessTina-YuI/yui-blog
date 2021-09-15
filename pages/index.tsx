@@ -1,9 +1,9 @@
 import { NextPage } from 'next';
 import { useEffect } from 'react';
-import { Element, Events, scroller } from 'react-scroll';
+import { Events, scroller } from 'react-scroll';
+import PageLayout from '@/layouts/PageLayout';
 import SectionContainer from '@/components/SectionContainer';
 import Banner from '@/components/Banner';
-import PageLayout from '@/layouts/PageLayout';
 
 const Home: NextPage = () => {
 
@@ -29,11 +29,10 @@ const Home: NextPage = () => {
 
     return (
         <PageLayout>
-            {/*<Banner downClick={downClick}/>*/}
-            <Element name="container"/>
             <SectionContainer>
-                <div className="w-full h-screen bg-yellow-50"/>
-                <div className="w-full h-screen bg-red-300"/>
+                <div className="w-full h-full">
+                    <Banner/>
+                </div>
             </SectionContainer>
         </PageLayout>
     );

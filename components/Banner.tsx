@@ -1,39 +1,53 @@
-import { motion } from 'framer-motion';
-import { BiChevronsDown } from 'react-icons/bi';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-type bannerProps = {
-    downClick?: Function | null
+type ImageType = {
+    img?: string
 }
 
-const variants = {
-    visible: {
-        y: [-5, 5, -5],
-        opacity: [0.2, 0.6, 1, 0.2]
-    }
-};
+const Banner: React.FC = () => {
 
-const Banner: React.FC<bannerProps> = ({ downClick }) => {
+    const [imgObj, setImgObj] = useState<Array<ImageType>>();
+    const [selectImg, setSelectImg] = useState<number>(0);
+
+    useEffect(() => {
+        const image = [
+            {
+                img: '/static/images/2021-02-17-01.png'
+            },
+            {
+                img: '/static/images/2021-02-17-02.png'
+            }
+        ];
+
+        setImgObj(image);
+    }, []);
+
+    const selectImgClick = (index: number) => {
+        setSelectImg(index);
+    };
+
     return (
-        <div className="relative w-full h-screen bg-fixed">
-            <div className="w-full h-full bg-no-repeat bg-cover"
-                 style={{ backgroundImage: 'url(/static/images/2021-02-17-01.png)' }}/>
-
-            <div className="absolute bottom-4 w-full text-white text-4xl flex justify-center">
-                <motion.div
-                    animate="visible"
-                    variants={variants}
-                    transition={{ ease: 'easeInOut', duration: 1, repeat: Infinity }}
-                >
-                    <BiChevronsDown className="hover:cursor-pointer"
-                                    onClick={() => {
-                                        if (downClick) {
-                                            downClick();
-                                        }
-                                    }}/>
-                </motion.div>
+        <>
+            <div className="relative w-full h-1/2">
+                {
+                    imgObj?.map((item, index) =>
+                        <div key={index} className={`w-full h-full rounded-2xl bg-no-repeat bg-center absolute 
+                                transition-opacity duration-700 ${selectImg === index ? 'opacity-100' : 'opacity-0'}`}
+                             style={{ backgroundImage: `url(${item.img})` }}/>
+                    )
+                }
             </div>
-        </div>
+            <div className="h-3 mt-2 flex float-right">
+                {
+                    imgObj?.map((item, index) => {
+                        return <div key={index} className={`w-6 h-full mx-1 rounded-full hover:cursor-pointer
+                                        transition-all duration-500
+                                        ${(selectImg == index) ? 'w-10 bg-blue-500' : 'w-6 bg-gray-300'}`}
+                                    onClick={() => selectImgClick(index)}/>;
+                    })
+                }
+            </div>
+        </>
     );
 };
 
