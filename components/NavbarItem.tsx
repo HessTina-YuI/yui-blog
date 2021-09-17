@@ -1,45 +1,15 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import Link from '@/components/Link';
 import { Url } from 'url';
 
-type ItemProps<T> = {
-    navOpen: boolean
-    title: string
-    url?: Url | string
+interface NavBarItemProps {
+    navOpen: boolean;
+    title: string;
+    url?: Url | string;
+    icon?: React.ReactNode;
 }
 
-const Icon: React.FC = ({ children }) => {
-    return (
-        <span>
-            {children}
-        </span>
-    );
-};
-
-const Item: React.FC<ItemProps<any>> = ({ navOpen, title, url, children }) => {
-
-    const item = useMemo(() => {
-        let item = {
-            // @ts-ignore
-            icon: React.ReactNode
-        };
-
-        if (children instanceof Array) {
-            Array.from(children).forEach(value => {
-                // @ts-ignore
-                if (value['type']['name'] === 'Icon') {
-                    item.icon = value;
-                }
-            });
-        } else {
-            // @ts-ignore
-            if (children['type']['name'] === 'Icon') {
-                item.icon = children;
-            }
-        }
-
-        return item;
-    }, [children]);
+const NavBarItem: React.FC<NavBarItemProps> = ({ navOpen, title, url, icon }) => {
 
     const [iconMouseOn, setIconMouseOn] = useState<boolean>(false);
 
@@ -56,7 +26,7 @@ const Item: React.FC<ItemProps<any>> = ({ navOpen, title, url, children }) => {
                     ${iconMouseOn ? 'border-black bg-gray-400 text-white' : 'border-transparent bg-transparent text-black'}
                     ${navOpen ? 'py-3 px-8' : 'py-3 px-4'}`}>
             <div className="relative flex items-center">
-                <span className="text-2xl">{item.icon ? item.icon : null}</span>
+                <span className="text-2xl">{icon}</span>
                 <span className={`ml-2 whitespace-nowrap text-base transition-opacity duration-300
                         ${navOpen ? 'opacity-100' : 'opacity-0'}`}>
                     {title}
@@ -78,8 +48,4 @@ const Item: React.FC<ItemProps<any>> = ({ navOpen, title, url, children }) => {
     );
 };
 
-const NavbarItem = {
-    Item, Icon
-};
-
-export default NavbarItem;
+export default NavBarItem;

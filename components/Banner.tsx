@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import TaskInterval from '@/lib/TaskInterval';
+import { IProps } from '@/lib/CommonProps';
 
-type ImageType = {
-    img?: string
+interface BannerProps extends IProps {
 }
 
-const Banner: React.FC = () => {
+interface ImageType {
+    img?: string;
+}
+
+const Banner: React.FC<BannerProps> = ({ className }) => {
 
     const intervalRef = useRef<TaskInterval>();
     const [imgObj, setImgObj] = useState<Array<ImageType>>();
@@ -44,12 +48,12 @@ const Banner: React.FC = () => {
     };
 
     return (
-        <>
-            <div className="relative w-full h-3/5">
+        <div className={`${className} pb-7`}>
+            <div className="w-full h-full relative">
                 {
                     imgObj?.map((item, index) =>
-                        <div key={index} className={`w-full h-full rounded-2xl bg-no-repeat bg-center absolute 
-                                transition-opacity duration-700 ${selectImg === index ? 'opacity-100' : 'opacity-0'}`}
+                        <div key={index} className={`w-full h-full rounded-2xl bg-no-repeat bg-center absolute
+            transition-opacity duration-700 ${selectImg === index ? 'opacity-100' : 'opacity-0'}`}
                              style={{ backgroundImage: `url(${item.img})` }}/>
                     )
                 }
@@ -58,13 +62,13 @@ const Banner: React.FC = () => {
                 {
                     imgObj?.map((item, index) => {
                         return <div key={index} className={`w-6 h-full mx-1 rounded-full hover:cursor-pointer
-                                        transition-all duration-500
-                                        ${(selectImg == index) ? 'w-10 bg-blue-500' : 'w-6 bg-gray-300'}`}
+            transition-all duration-500
+            ${(selectImg == index) ? 'w-10 bg-blue-500' : 'w-6 bg-gray-300'}`}
                                     onClick={() => selectImgClick(index)}/>;
                     })
                 }
             </div>
-        </>
+        </div>
     );
 };
 

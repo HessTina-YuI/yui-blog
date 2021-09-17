@@ -45,21 +45,11 @@ const Navbar: React.FC = ({ children }) => {
                     </div>
                 </div>
                 <ul className="w-full">
-                    <NavbarItem.Item navOpen={navOpen} title="首页" url="/">
-                        <NavbarItem.Icon><RiBuilding2Fill/></NavbarItem.Icon>
-                    </NavbarItem.Item>
-                    <NavbarItem.Item navOpen={navOpen} title="文章" url="/article">
-                        <NavbarItem.Icon><RiBookFill/></NavbarItem.Icon>
-                    </NavbarItem.Item>
-                    <NavbarItem.Item navOpen={navOpen} title="记录" url="/history">
-                        <NavbarItem.Icon><RiChatHistoryFill/></NavbarItem.Icon>
-                    </NavbarItem.Item>
-                    <NavbarItem.Item navOpen={navOpen} title="故事" url="/story">
-                        <NavbarItem.Icon><RiBallPenFill/></NavbarItem.Icon>
-                    </NavbarItem.Item>
-                    <NavbarItem.Item navOpen={navOpen} title="收藏" url="/collector">
-                        <NavbarItem.Icon><RiFolder4Fill/></NavbarItem.Icon>
-                    </NavbarItem.Item>
+                    <NavbarItem navOpen={navOpen} title="首页" url="/" icon={<RiBuilding2Fill/>}/>
+                    <NavbarItem navOpen={navOpen} title="文章" url="/article" icon={<RiBookFill/>}/>
+                    <NavbarItem navOpen={navOpen} title="记录" url="/history" icon={<RiChatHistoryFill/>}/>
+                    <NavbarItem navOpen={navOpen} title="故事" url="/story" icon={<RiBallPenFill/>}/>
+                    <NavbarItem navOpen={navOpen} title="收藏" url="/collector" icon={<RiFolder4Fill/>}/>
                 </ul>
             </nav>
             <div

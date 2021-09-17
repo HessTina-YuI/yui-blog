@@ -2,8 +2,8 @@ import React, { Fragment, ReactNode } from 'react';
 import { useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
 
-type Props = {
-    children: ReactNode
+interface PageLayoutProps {
+    children: ReactNode;
 }
 
 const variants = {
@@ -13,7 +13,7 @@ const variants = {
     transition: { type: 'easy-in-out', delay: 2, duration: 1 }
 };
 
-const PageLayout: React.FC<Props> = ({ children }) => {
+const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
     return (
         <motion.div
             initial="hidden"

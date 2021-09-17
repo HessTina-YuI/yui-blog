@@ -1,9 +1,10 @@
 import { NextPage } from 'next';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Events, scroller } from 'react-scroll';
 import PageLayout from '@/layouts/PageLayout';
 import SectionContainer from '@/components/SectionContainer';
 import Banner from '@/components/Banner';
+import CountCard from '@/components/CountCard';
 
 const Home: NextPage = () => {
 
@@ -30,9 +31,8 @@ const Home: NextPage = () => {
     return (
         <PageLayout>
             <SectionContainer>
-                <div className="w-full h-full">
-                    <Banner/>
-                </div>
+                <Banner className="w-full h-3/5"/>
+                <CountCard className="w-full h-2/5"/>
             </SectionContainer>
         </PageLayout>
     );
