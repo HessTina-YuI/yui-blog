@@ -19,7 +19,6 @@ const Navbar: React.FC = ({ children }) => {
 
     const navOpenClick = () => {
         setNavOpen(!navOpen);
-        console.log('aaaaaa');
 
         setNavMouseOn(false);
         waitAnimationEnd = false;
