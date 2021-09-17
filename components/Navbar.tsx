@@ -1,19 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import {
-    BiArrowToLeft, BiArrowToRight, BiHomeAlt,
-    BiBookContent, BiHistory, BiPencil, BiBox
-} from 'react-icons/bi';
+import React, { useEffect, useState } from 'react';
+import { BiArrowToLeft, BiArrowToRight } from 'react-icons/bi';
+import { RiBuilding2Fill, RiBookFill, RiChatHistoryFill, RiBallPenFill, RiFolder4Fill } from 'react-icons/ri';
 import NavbarItem from '@/components/NavbarItem';
-import { Url } from 'url';
 
 let waitAnimationEnd: boolean = true;
-const initWidth = 10;
-const narrowWidth = 5;
+const initWidth = 16;
+const narrowWidth = 4;
 
 const Navbar: React.FC = ({ children }) => {
 
-    const router = useRouter();
     const [navWidth, setNavWidth] = useState<number>(initWidth);
     const [navOpen, setNavOpen] = useState<boolean>(true);
     const [navMouseOn, setNavMouseOn] = useState<boolean>(false);
@@ -22,12 +17,9 @@ const Navbar: React.FC = ({ children }) => {
         navOpen ? setNavWidth(initWidth) : setNavWidth(narrowWidth);
     }, [navOpen]);
 
-    const navRouteClick = (url: Url | string) => {
-        router.replace(url).then(r => r ? null : console.error(`${url} is  ${r}`));
-    };
-
     const navOpenClick = () => {
         setNavOpen(!navOpen);
+        console.log('aaaaaa');
 
         setNavMouseOn(false);
         waitAnimationEnd = false;
@@ -47,39 +39,40 @@ const Navbar: React.FC = ({ children }) => {
     return (
         <>
             <nav
-                className="h-full px-6 fixed top-0 left-0 z-20 text-white text-2xl bg-black transition-all duration-500 overflow-visible"
+                className="h-full fixed top-0 left-0 z-20 bg-white shadow-lg text-black transition-all duration-500"
                 style={{ width: `${navWidth}rem` }} onMouseOver={navMouseOver} onMouseLeave={navMouseLeave}>
                 <div className="w-full h-32 mt-2 mb-4">
                     <div className="my-2 pl-1.5 rounded-lg flex items-center hover:cursor-pointer">
                     </div>
                 </div>
-                <div>
-                    <NavbarItem.Item navOpen={navOpen} title="首页" onClick={() => navRouteClick('/')}>
-                        <NavbarItem.Icon><BiHomeAlt/></NavbarItem.Icon>
+                <ul className="w-full">
+                    <NavbarItem.Item navOpen={navOpen} title="首页" url="/">
+                        <NavbarItem.Icon><RiBuilding2Fill/></NavbarItem.Icon>
                     </NavbarItem.Item>
-                    <NavbarItem.Item navOpen={navOpen} title="文章" onClick={() => navRouteClick('/article')}>
-                        <NavbarItem.Icon><BiBookContent/></NavbarItem.Icon>
+                    <NavbarItem.Item navOpen={navOpen} title="文章" url="/article">
+                        <NavbarItem.Icon><RiBookFill/></NavbarItem.Icon>
                     </NavbarItem.Item>
-                    <NavbarItem.Item navOpen={navOpen} title="记录" onClick={() => navRouteClick('/history')}>
-                        <NavbarItem.Icon><BiHistory/></NavbarItem.Icon>
+                    <NavbarItem.Item navOpen={navOpen} title="记录" url="/history">
+                        <NavbarItem.Icon><RiChatHistoryFill/></NavbarItem.Icon>
                     </NavbarItem.Item>
-                    <NavbarItem.Item navOpen={navOpen} title="故事" onClick={() => navRouteClick('/story')}>
-                        <NavbarItem.Icon><BiPencil/></NavbarItem.Icon>
+                    <NavbarItem.Item navOpen={navOpen} title="故事" url="/story">
+                        <NavbarItem.Icon><RiBallPenFill/></NavbarItem.Icon>
                     </NavbarItem.Item>
-                    <NavbarItem.Item navOpen={navOpen} title="收藏" onClick={() => navRouteClick('/collector')}>
-                        <NavbarItem.Icon><BiBox/></NavbarItem.Icon>
+                    <NavbarItem.Item navOpen={navOpen} title="收藏" url="/collector">
+                        <NavbarItem.Icon><RiFolder4Fill/></NavbarItem.Icon>
                     </NavbarItem.Item>
-                </div>
+                </ul>
             </nav>
             <div
                 className={`w-12 h-12 rounded-xl rotate-45 transition-all duration-500 ease-in-out hover:cursor-pointer
-                            fixed z-10 top-16 bg-black ${navMouseOn ? '-translate-x-7' : '-translate-x-14'}`}
+                        fixed z-30 top-16 bg-white ${navMouseOn ? '-translate-x-7' : '-translate-x-14'}`}
                 style={{ left: `${navWidth}rem` }} onMouseOver={navMouseOver} onMouseLeave={navMouseLeave}
                 onClick={navOpenClick}>
-                <div className="-rotate-45">
+                <div className={`-rotate-45 text-xl text-black transition-opacity duration-200 
+                        ${navMouseOn ? 'opacity-100 delay-200' : 'opacity-0'}`}>
                     {navOpen ?
-                        <BiArrowToLeft className="text-xl text-white translate-x-4 translate-y-2"/> :
-                        <BiArrowToRight className="text-xl text-white translate-x-4 translate-y-2"/>
+                        <BiArrowToLeft className="translate-x-4 translate-y-2"/> :
+                        <BiArrowToRight className="translate-x-4 translate-y-2"/>
                     }
                 </div>
             </div>

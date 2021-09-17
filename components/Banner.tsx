@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import TaskInterval from '@/lib/TaskInterval';
 
 type ImageType = {
     img?: string
@@ -6,6 +7,7 @@ type ImageType = {
 
 const Banner: React.FC = () => {
 
+    const intervalRef = useRef<TaskInterval>();
     const [imgObj, setImgObj] = useState<Array<ImageType>>();
     const [selectImg, setSelectImg] = useState<number>(0);
 
@@ -22,13 +24,28 @@ const Banner: React.FC = () => {
         setImgObj(image);
     }, []);
 
+    useEffect(() => {
+        intervalRef.current = new TaskInterval(() => {
+            const length = imgObj?.length;
+            length ? setSelectImg(v => (v + 1) % length) : null;
+        }, 5000);
+        intervalRef.current?.start();
+
+        return () => {
+            intervalRef.current ? intervalRef.current?.stop() : null;
+        };
+
+    }, [imgObj?.length]);
+
     const selectImgClick = (index: number) => {
         setSelectImg(index);
+
+        intervalRef.current ? intervalRef.current?.reset() : null;
     };
 
     return (
         <>
-            <div className="relative w-full h-1/2">
+            <div className="relative w-full h-3/5">
                 {
                     imgObj?.map((item, index) =>
                         <div key={index} className={`w-full h-full rounded-2xl bg-no-repeat bg-center absolute 

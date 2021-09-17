@@ -1,9 +1,11 @@
-import React, { MouseEventHandler, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import Link from '@/components/Link';
+import { Url } from 'url';
 
 type ItemProps<T> = {
     navOpen: boolean
     title: string
-    onClick?: MouseEventHandler<T> | undefined;
+    url?: Url | string
 }
 
 const Icon: React.FC = ({ children }) => {
@@ -14,7 +16,7 @@ const Icon: React.FC = ({ children }) => {
     );
 };
 
-const Item: React.FC<ItemProps<any>> = ({ navOpen, title, onClick, children }) => {
+const Item: React.FC<ItemProps<any>> = ({ navOpen, title, url, children }) => {
 
     const item = useMemo(() => {
         let item = {
@@ -50,25 +52,29 @@ const Item: React.FC<ItemProps<any>> = ({ navOpen, title, onClick, children }) =
     };
 
     return (
-        <div className="w-full h-10 my-4 relative flex items-center">
-            <div className="w-full h-full my-4 pl-1 rounded-lg flex items-center
-                    hover:bg-white hover:text-black hover:cursor-pointer duration-500"
-                 onMouseOver={iconMouseOver} onMouseLeave={iconMouseLeave} onClick={onClick}>
-                {item.icon ? item.icon : null}
-                <span className={`whitespace-nowrap text-xl ml-3 transition-opacity duration-500
+        <li className={`border-l-4 relative transition-all duration-500 cursor-default
+                    ${iconMouseOn ? 'border-black bg-gray-400 text-white' : 'border-transparent bg-transparent text-black'}
+                    ${navOpen ? 'py-3 px-8' : 'py-3 px-4'}`}>
+            <div className="relative flex items-center">
+                <span className="text-2xl">{item.icon ? item.icon : null}</span>
+                <span className={`ml-2 whitespace-nowrap text-base transition-opacity duration-300
                         ${navOpen ? 'opacity-100' : 'opacity-0'}`}>
-                  {title}
+                    {title}
                 </span>
             </div>
+            <Link href={url ? url : '#'}>
+                <div className="w-full h-full bg-transparent absolute top-0 -left-1 hover:cursor-pointer"
+                     onMouseOver={iconMouseOver} onMouseLeave={iconMouseLeave}/>
+            </Link>
             {!navOpen ?
                 <div
-                    className={`p-2 bg-blue-400 rounded-lg whitespace-nowrap text-base transition-all duration-500 
-                    ${iconMouseOn ? 'opacity-100 translate-x-2' : 'opacity-0 translate-x-0'}`}>
+                    className={`p-2 bg-white shadow-lg rounded-lg whitespace-nowrap text-black text-base transition-all duration-500 absolute top-1 left-14
+                        ${iconMouseOn ? 'opacity-100 translate-x-4' : 'opacity-0 translate-x-1'}`}>
                     {title}
                 </div>
                 : null
             }
-        </div>
+        </li>
     );
 };
 
