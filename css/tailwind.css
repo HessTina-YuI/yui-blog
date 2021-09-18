@@ -16,6 +16,11 @@
         overscroll-behavior-y: none;
     }
 
+    .tooltip {
+        padding: 0 1rem !important;
+        border-radius: 1rem !important;
+    }
+
     @variants dark {
 
     }

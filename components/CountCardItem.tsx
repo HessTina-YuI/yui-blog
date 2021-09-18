@@ -23,22 +23,22 @@ const variants = {
 
 const CountCardItem: React.FC<CountCardItemProps> = ({ className, ...props }) => {
     return (
-        <div className={`${className} w-full h-full p-4 xl:p-6 bg-white rounded-2xl shadow-lg relative`}>
-            <div className="flex justify-between">
-                <div className="inline-block p-3 xl:p-4 rounded-lg bg-blue-500 text-2xl xl:text-4xl text-white">
+        <div className={`${className} w-60 h-full p-4 bg-white rounded-2xl shadow-lg`}>
+            <div className="h-1/4 flex justify-between">
+                <div className="inline-block p-2 rounded-lg bg-blue-500 text-2xl text-white">
                     {props.icon}
                 </div>
                 <span className="mr-4 text-2xl xl:text-4xl">{props.count}</span>
             </div>
-            <div className="mt-2 xl:mt-4 font-bold text-2xl">
+            <div className="mt-2 font-bold text-xl">
                 {props.name}
             </div>
-            <div className="w-full h-2/5 xl:h-1/5 mt-2 overflow-hidden">
+            <div className="w-full h-1/3 mt-1 text-xs overflow-hidden">
                 {props.description}
             </div>
             <Link href={props.url ? props.url : '#'}>
                 <div
-                    className="w-20 h-8 bg-blue-500 rounded-full absolute bottom-4 right-6 xl:right-9">
+                    className="w-20 h-8 -mt-2 bg-blue-500 rounded-full float-right">
                     <motion.div className="w-full h-full flex justify-center items-center"
                                 whileHover="hover"
                                 variants={variants}>

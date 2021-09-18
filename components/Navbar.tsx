@@ -1,17 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { BiArrowToLeft, BiArrowToRight } from 'react-icons/bi';
-import { RiBuilding2Fill, RiBookFill, RiChatHistoryFill, RiBallPenFill, RiFolder4Fill } from 'react-icons/ri';
-import NavbarItem from '@/components/NavbarItem';
+import { RiBuilding2Fill, RiBookFill, RiChatHistoryFill, RiBallPenFill, RiFolder4Fill, RiUser4Fill } from 'react-icons/ri';
+import NavbarItem, { NavBarItemProps } from '@/components/NavbarItem';
 
 let waitAnimationEnd: boolean = true;
-const initWidth = 16;
+const initWidth = 12;
 const narrowWidth = 4;
 
 const Navbar: React.FC = ({ children }) => {
 
+    const [navItem, setNavItem] = useState<Array<NavBarItemProps>>();
     const [navWidth, setNavWidth] = useState<number>(initWidth);
     const [navOpen, setNavOpen] = useState<boolean>(true);
     const [navMouseOn, setNavMouseOn] = useState<boolean>(false);
+
+    useEffect(() => {
+        setNavItem([
+            {
+                title: '首页',
+                url: '/',
+                icon: <RiBuilding2Fill/>
+            },
+            {
+                title: '文章',
+                url: '/article',
+                icon: <RiBookFill/>
+            },
+            {
+                title: '记录',
+                url: '/history',
+                icon: <RiChatHistoryFill/>
+            },
+            {
+                title: '故事',
+                url: '/story',
+                icon: <RiBallPenFill/>
+            },
+            {
+                title: '收藏',
+                url: '/collector',
+                icon: <RiFolder4Fill/>
+            },
+            {
+                title: '关于',
+                url: '/about',
+                icon: <RiUser4Fill/>
+            },
+        ]);
+    }, []);
 
     useEffect(() => {
         navOpen ? setNavWidth(initWidth) : setNavWidth(narrowWidth);
@@ -45,11 +81,12 @@ const Navbar: React.FC = ({ children }) => {
                     </div>
                 </div>
                 <ul className="w-full">
-                    <NavbarItem navOpen={navOpen} title="首页" url="/" icon={<RiBuilding2Fill/>}/>
-                    <NavbarItem navOpen={navOpen} title="文章" url="/article" icon={<RiBookFill/>}/>
-                    <NavbarItem navOpen={navOpen} title="记录" url="/history" icon={<RiChatHistoryFill/>}/>
-                    <NavbarItem navOpen={navOpen} title="故事" url="/story" icon={<RiBallPenFill/>}/>
-                    <NavbarItem navOpen={navOpen} title="收藏" url="/collector" icon={<RiFolder4Fill/>}/>
+                    {
+                        navItem?.map(((value, index) => {
+                                return <NavbarItem key={index} navOpen={navOpen} {...value}/>;
+                            }
+                        ))
+                    }
                 </ul>
             </nav>
             <div

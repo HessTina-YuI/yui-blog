@@ -16,7 +16,7 @@ const CountCard: React.FC<CountCardProps> = ({ className }) => {
             id: '1',
             name: '文章',
             count: 10,
-            description: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试',
+            description: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试',
             icon: <RiBookFill/>,
             url: '/article'
         }, {
@@ -42,7 +42,7 @@ const CountCard: React.FC<CountCardProps> = ({ className }) => {
             {
                 card?.map(((value, index) =>
                         <CountCardItem key={value.id} {...value}
-                                       className={`flex-1 ${index !== (card?.length - 1) ? 'mr-6' : ''}`}/>
+                                       className={`${index !== 0 ? 'ml-6' : ''}`}/>
                 ))
             }
         </div>
