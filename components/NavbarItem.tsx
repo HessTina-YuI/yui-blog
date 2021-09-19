@@ -22,7 +22,6 @@ const NavBarItem: React.FC<NavBarItemProps> = ({ ...props }) => {
         const url = props.url;
 
         if (url === '/' && routeUrl === '/') {
-            debugger
             setActive(true);
         } else {
             if (url !== '/' && routeUrl.indexOf(url ? url.toString() : '...') !== -1) {

@@ -43,7 +43,9 @@ function Test() {
                 animate={recipes.length > 0 && "visible"}
             >
                 {recipes.map(recipe => (
+                    // @ts-ignore
                     <motion.li key={recipe.idMeal} variants={item}>
+                        {/*// @ts-ignore */}
                         <div className="p-2 bg-red-400">{recipe.strMeal}</div>
                     </motion.li>
                 ))}

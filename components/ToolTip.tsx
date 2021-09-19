@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RiGithubFill, RiMailOpenFill, RiQqFill, RiWechat2Fill } from 'react-icons/ri';
 import ReactTooltip from 'react-tooltip';
-import { IProps } from '@/lib/CommonProps';
+import { IProps } from '@/lib/common-props';
 
 interface ToolTip extends IProps {
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { ImArrowRight2 } from 'react-icons/im';
 import { Url } from 'url';
 import { motion } from 'framer-motion';
-import { IProps } from '@/lib/CommonProps';
+import { IProps } from '@/lib/common-props';
 import Link from '@/components/Link';
 
 export interface CountCardItemProps extends IProps {
