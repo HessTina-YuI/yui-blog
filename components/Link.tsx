@@ -8,7 +8,7 @@ const CustomLink: React.FC<LinkProps> = ({ href, ...rest }) => {
 
     if (isInternalLink) {
         return (
-            <Link href={href}>
+            <Link href={href} scroll={false}>
                 <a {...rest} />
             </Link>
         );

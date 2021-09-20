@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import TaskInterval from '@/lib/task-interval';
-import { IProps } from '@/lib/common-props';
+import { IProps } from '@/interface/IProps';
 
 interface BannerProps extends IProps {
 }

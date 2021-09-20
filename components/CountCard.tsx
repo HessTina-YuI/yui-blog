@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RiBookFill } from 'react-icons/ri';
 import CountCardItem, { CountCardItemProps } from '@/components/CountCardItem';
-import { IProps } from '@/lib/common-props';
+import { IProps } from '@/interface/IProps';
 
 interface CountCardProps extends IProps {
 

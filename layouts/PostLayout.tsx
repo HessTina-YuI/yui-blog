@@ -9,7 +9,7 @@ const variants = {
     transition: { type: 'easy-in-out', delay: 2, duration: 1 }
 };
 
-const PageLayout: React.FC = ({ children }) => {
+const PostLayout: React.FC = ({ children }) => {
     return (
         <motion.div
             className="bg-gray-100"
@@ -23,8 +23,7 @@ const PageLayout: React.FC = ({ children }) => {
                 </Fragment>
             </AnimatePresence>
         </motion.div>
-
     );
 };
 
-export default PageLayout;
+export default PostLayout;

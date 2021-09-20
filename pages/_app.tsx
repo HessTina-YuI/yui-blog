@@ -1,4 +1,6 @@
 import '@/css/tailwind.css';
+import '@/css/prism.css'
+
 import { ThemeProvider } from 'next-themes';
 import type { AppProps } from 'next/app';
 import Navbar from '@/components/Navbar';
@@ -11,7 +13,6 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
                 <AnimatePresence
                     exitBeforeEnter
                     initial={false}
-                    onExitComplete={() => window.scrollTo(0, 0)}
                 >
                     <Component {...pageProps} key={router.route}/>
                 </AnimatePresence>

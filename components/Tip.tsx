@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { RiGithubFill, RiMailOpenFill, RiQqFill, RiWechat2Fill } from 'react-icons/ri';
 import ReactTooltip from 'react-tooltip';
-import { IProps } from '@/lib/common-props';
+import { IProps } from '@/interface/IProps';
 
-interface ToolTip extends IProps {
+interface Tip extends IProps {
 
 }
 
-const ToolTip: React.FC<ToolTip> = ({ className }) => {
+const ToolTip: React.FC<Tip> = ({ className }) => {
 
     const [isMounted, setMount] = useState(false);
 
