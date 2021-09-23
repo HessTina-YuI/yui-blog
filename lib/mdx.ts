@@ -13,15 +13,17 @@ import rehypePrism from 'rehype-prism-plus';
 
 export interface IBlogAttribute {
     mdxSource: any;
-    toc: any[];
+    toc: Array<ITocAttribute>;
     frontMatter: IFrontMatterAttribute;
 }
 
 export interface IFrontMatterAttribute {
     readingTime: ReadTimeResults;
-    slug: string | null;
+    slug: string;
     fileName: string;
+    title?: string;
     date?: string | null;
+    tags?: Array<string>
 }
 
 const root = process.cwd();
@@ -93,7 +95,7 @@ export const getFileBySlug = async (type: string, slug: string): Promise<IBlogAt
         esbuildOptions: (options) => {
             options.loader = {
                 ...options.loader,
-                '.js': 'jsx'
+                '.ts': 'tsx'
             };
             return options;
         }
@@ -104,7 +106,7 @@ export const getFileBySlug = async (type: string, slug: string): Promise<IBlogAt
         toc,
         frontMatter: {
             readingTime: readingTime(code),
-            slug: slug || null,
+            slug: slug,
             fileName: fs.existsSync(mdxPath) ? `${slug}.mdx` : `${slug}.md`,
             ...frontmatter,
             date: frontmatter.date ? new Date(frontmatter.date).toISOString() : null

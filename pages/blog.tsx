@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import PageLayout from '@/layouts/PageLayout';
 import Link from '@/components/Link';
 
-const Article: NextPage = () => {
+const Blog: NextPage = () => {
 
     return (
         <PageLayout>
@@ -16,4 +16,4 @@ const Article: NextPage = () => {
 
 };
 
-export default Article;
+export default Blog;

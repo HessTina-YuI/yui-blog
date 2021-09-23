@@ -23,7 +23,7 @@ const Navbar: React.FC = ({ children }) => {
             },
             {
                 title: '文章',
-                url: '/article',
+                url: '/blog',
                 icon: <RiBookFill/>
             },
             {

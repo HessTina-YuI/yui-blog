@@ -10,6 +10,7 @@ import {
 import { MDXLayoutRenderer } from '@/components/markdown/MDXComponents';
 import PostLayout from '@/layouts/PostLayout';
 import React from 'react';
+import TOCComponent from '@/components/markdown/TOCComponent';
 
 interface BlogProps {
     post: IBlogAttribute;
@@ -27,8 +28,8 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
 
     return (
         <PostLayout>
-            <div className="w-full h-full">
-                <article className="w-3/5 ml-32 prose lg:prose-lg">
+            <div className="w-full flex">
+                <article className="w-3/5 ml-32 prose">
                     <MDXLayoutRenderer
                         toc={toc}
                         mdxSource={mdxSource}
@@ -36,6 +37,12 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
                         prev={prev}
                         next={next}/>
                 </article>
+                <div className="w-1/6 xl:w-1/5 ml-12 relative">
+                    <TOCComponent
+                        className="overflow-y-scroll sticky top-0 hidden lg:block"
+                        toc={toc}
+                        frontMatter={frontMatter}/>
+                </div>
             </div>
         </PostLayout>
     );
