@@ -9,7 +9,7 @@ import {
 } from '@/lib/mdx';
 import { MDXLayoutRenderer } from '@/components/markdown/MDXComponents';
 import PostLayout from '@/layouts/PostLayout';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TOCComponent from '@/components/markdown/TOCComponent';
 
 interface BlogProps {
@@ -26,6 +26,21 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
 
     const { mdxSource, toc, frontMatter } = post;
 
+    const [stylesItem, setStylesItem] = useState("");
+
+    useEffect(() => {
+        setStylesItem("footnote-back");
+    }, []);
+
+    useEffect(() => {
+        if (stylesItem) {
+            const items = document.querySelectorAll(`.${stylesItem}`);
+            items.forEach((val) => {
+                val.innerHTML = '←';
+            });
+        }
+    }, [stylesItem]);
+
     return (
         <PostLayout>
             <div className="w-full flex">
@@ -37,7 +52,7 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
                         prev={prev}
                         next={next}/>
                 </article>
-                <div className="w-1/6 xl:w-1/5 ml-12 relative">
+                <div className="ml-12 relative">
                     <TOCComponent
                         className="overflow-y-scroll sticky top-0 hidden lg:block"
                         toc={toc}

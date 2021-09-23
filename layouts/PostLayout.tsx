@@ -12,7 +12,6 @@ const variants = {
 const PostLayout: React.FC = ({ children }) => {
     return (
         <motion.div
-            className="bg-gray-100"
             initial="hidden"
             animate="enter"
             exit="exit"

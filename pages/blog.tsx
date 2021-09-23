@@ -10,6 +10,9 @@ const Blog: NextPage = () => {
                 <Link href={"/blog/a"}>
                     aaaaaaaaaaaaaaa
                 </Link>
+                <Link href={"/blog/b"}>
+                    bbbbbbb
+                </Link>
             </div>
         </PageLayout>
     );

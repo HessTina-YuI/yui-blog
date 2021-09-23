@@ -5,10 +5,15 @@ import { bundleMDX } from 'mdx-bundler';
 import readingTime, { ReadTimeResults } from 'reading-time';
 import getAllFilesRecursively from '@/lib/files';
 // remark
-import remarkTocHeadings, { ITocAttribute } from '@/lib/remark-toc-headings';
 import remarkGfm from 'remark-gfm';
+import remarkFootnotes from 'remark-footnotes';
+import remarkMath from 'remark-math';
+import remarkDirective from 'remark-directive';
+import remarkTocHeadings, { ITocAttribute } from '@/lib/remark-toc-headings';
+import remarkCustomDirector from '@/lib/remark-custom-director';
 // rehype
 import rehypeSlug from 'rehype-slug';
+import rehypeKatex from 'rehype-katex';
 import rehypePrism from 'rehype-prism-plus';
 
 export interface IBlogAttribute {
@@ -23,7 +28,7 @@ export interface IFrontMatterAttribute {
     fileName: string;
     title?: string;
     date?: string | null;
-    tags?: Array<string>
+    tags?: Array<string>;
 }
 
 const root = process.cwd();
@@ -82,12 +87,17 @@ export const getFileBySlug = async (type: string, slug: string): Promise<IBlogAt
             // plugins in the future.
             options.remarkPlugins = [
                 ...(options.remarkPlugins ?? []),
+                remarkGfm,
+                [remarkFootnotes, { inlineNotes: false, footnoteHtml: '<a>test</a>' }],
+                remarkMath,
+                remarkDirective,
                 [remarkTocHeadings, { exportRef: toc }],
-                remarkGfm
+                remarkCustomDirector
             ];
             options.rehypePlugins = [
                 ...(options.rehypePlugins ?? []),
                 rehypeSlug,
+                rehypeKatex,
                 [rehypePrism, { ignoreMissing: true }]
             ];
             return options;

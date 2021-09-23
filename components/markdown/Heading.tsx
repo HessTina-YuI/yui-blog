@@ -33,7 +33,7 @@ const Heading: React.FC<HeadingProps> = ({ level, id, children }) => {
     return (
         <HTMLHeading id={id} level={level}>
             <div className="relative">
-                <span className="absolute -left-14 text-blue-600 hover:cursor-pointer hover:text-blue-400"
+                <span className="absolute -left-14 text-blue-400 hover:cursor-pointer hover:text-blue-400"
                       onClick={() => scrollToAnchor(id ?? '')}>{level.toUpperCase()}</span>
                 {
                     content.map(((value, index) => {
