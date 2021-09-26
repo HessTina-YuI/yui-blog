@@ -26,10 +26,10 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
 
     const { mdxSource, toc, frontMatter } = post;
 
-    const [stylesItem, setStylesItem] = useState("");
+    const [stylesItem, setStylesItem] = useState('');
 
     useEffect(() => {
-        setStylesItem("footnote-back");
+        setStylesItem('footnote-back');
     }, []);
 
     useEffect(() => {
@@ -43,7 +43,9 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
 
     return (
         <PostLayout>
-            <div className="w-full flex justify-center">
+            <div className="w-full bg-fixed bg-cover bg-center"
+                 style={{ height: '60vh', backgroundImage: `url(/static/images/2021-02-25-01.jpg)` }}/>
+            <div className="w-full py-10 flex justify-center bg-gray-100">
                 <article className="w-3/5 prose">
                     <MDXLayoutRenderer
                         toc={toc}

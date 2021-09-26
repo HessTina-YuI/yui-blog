@@ -3,34 +3,21 @@ import TaskInterval from '@/lib/task-interval';
 import { IProps } from '@/interface/IProps';
 
 interface BannerProps extends IProps {
+    images?: Array<ImageType>;
 }
 
 interface ImageType {
-    img?: string;
+    image?: string;
 }
 
-const Banner: React.FC<BannerProps> = ({ className }) => {
+const Banner: React.FC<BannerProps> = ({ images = [], className }) => {
 
     const intervalRef = useRef<TaskInterval>();
-    const [imgObj, setImgObj] = useState<Array<ImageType>>();
     const [selectImg, setSelectImg] = useState<number>(0);
 
     useEffect(() => {
-        const image = [
-            {
-                img: '/static/images/2021-02-17-01.png'
-            },
-            {
-                img: '/static/images/2021-02-17-02.png'
-            }
-        ];
-
-        setImgObj(image);
-    }, []);
-
-    useEffect(() => {
         intervalRef.current = new TaskInterval(() => {
-            const length = imgObj?.length;
+            const length = images?.length;
             length ? setSelectImg(v => (v + 1) % length) : null;
         }, 5000);
         intervalRef.current?.start();
@@ -39,7 +26,7 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
             intervalRef.current ? intervalRef.current?.stop() : null;
         };
 
-    }, [imgObj?.length]);
+    }, [images?.length]);
 
     const selectImgClick = (index: number) => {
         setSelectImg(index);
@@ -51,19 +38,19 @@ const Banner: React.FC<BannerProps> = ({ className }) => {
         <div className={`${className} pb-7`}>
             <div className="w-full h-full relative">
                 {
-                    imgObj?.map((item, index) =>
+                    images?.map((item, index) =>
                         <div key={index} className={`w-full h-full rounded-2xl bg-no-repeat bg-center absolute
-            transition-opacity duration-700 ${selectImg === index ? 'opacity-100' : 'opacity-0'}`}
-                             style={{ backgroundImage: `url(${item.img})` }}/>
+                                transition-opacity duration-700 ${selectImg === index ? 'opacity-100' : 'opacity-0'}`}
+                             style={{ backgroundImage: `url(${item.image})` }}/>
                     )
                 }
             </div>
             <div className="h-3 mt-2 flex float-right">
                 {
-                    imgObj?.map((item, index) => {
+                    images?.length > 1 && images?.map((item, index) => {
                         return <div key={index} className={`w-6 h-full mx-1 rounded-full hover:cursor-pointer
-            transition-all duration-500
-            ${(selectImg == index) ? 'w-10 bg-blue-500' : 'w-6 bg-gray-300'}`}
+                                        transition-all duration-500
+                                        ${(selectImg == index) ? 'w-10 bg-blue-500' : 'w-6 bg-gray-300'}`}
                                     onClick={() => selectImgClick(index)}/>;
                     })
                 }

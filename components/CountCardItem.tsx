@@ -38,7 +38,7 @@ const CountCardItem: React.FC<CountCardItemProps> = ({ className, ...props }) =>
             </div>
             <Link href={props.url ? props.url : '#'}>
                 <div
-                    className="w-20 h-8 -mt-2 bg-blue-500 rounded-full float-right">
+                    className="w-20 h-8 mt-2 bg-blue-500 rounded-full float-right">
                     <motion.div className="w-full h-full flex justify-center items-center"
                                 whileHover="hover"
                                 variants={variants}>
