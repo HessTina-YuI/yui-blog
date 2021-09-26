@@ -38,5 +38,17 @@ error
 
 :::
 
+``` javascript
+async redirects() {
+  return [
+    {
+      source: '/:path/index.xml',
+      destination: '/:path/feed.xml',
+      permanent: true,
+    }
+  ]
+}
+```
+
 
 

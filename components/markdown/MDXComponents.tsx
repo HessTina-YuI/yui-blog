@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { getMDXComponent } from 'mdx-bundler/client';
 import { IBlogAttribute, IFrontMatterAttribute } from '@/lib/mdx';
-import Heading from '@/components/markdown/Heading';
+import HeadingComponents from '@/components/markdown/HeadingComponents';
+import CodeComponents from '@/components/markdown/CodeComponents';
 
 interface MDXLayoutRendererProps extends IBlogAttribute {
     prev?: IFrontMatterAttribute | null;
@@ -9,13 +10,13 @@ interface MDXLayoutRendererProps extends IBlogAttribute {
 }
 
 export const MDXComponents = {
-    h1: (props: any) => <Heading level="h1" {...props}/>,
-    h2: (props: any) => <Heading level="h2" {...props}/>,
-    h3: (props: any) => <Heading level="h3" {...props}/>,
-    h4: (props: any) => <Heading level="h4" {...props}/>,
-    h5: (props: any) => <Heading level="h5" {...props}/>,
-    h6: (props: any) => <Heading level="h6" {...props}/>
-
+    h1: (props: any) => <HeadingComponents level="h1" {...props}/>,
+    h2: (props: any) => <HeadingComponents level="h2" {...props}/>,
+    h3: (props: any) => <HeadingComponents level="h3" {...props}/>,
+    h4: (props: any) => <HeadingComponents level="h4" {...props}/>,
+    h5: (props: any) => <HeadingComponents level="h5" {...props}/>,
+    h6: (props: any) => <HeadingComponents level="h6" {...props}/>,
+    pre: CodeComponents
 };
 
 export const MDXLayoutRenderer: React.FC<MDXLayoutRendererProps> = ({ mdxSource, ...rest }) => {

@@ -16,11 +16,13 @@ module.exports = {
                     css: {
                         color: theme('colors.gray.700'),
                         a: {
-                            color: theme('colors.primary.500'),
+                            textDecoration: 'none',
+                            color: theme('colors.blue.500'),
                             '&:hover': {
-                                color: theme('colors.primary.600')
+                                color: theme('colors.blue.600'),
+                                textDecoration: 'none'
                             },
-                            code: { color: theme('colors.primary.400') }
+                            code: { color: theme('colors.blue.400') }
                         },
                         h1: {
                             fontWeight: '700',
@@ -38,6 +40,12 @@ module.exports = {
                         },
                         'h4,h5,h6': {
                             color: theme('colors.gray.900')
+                        },
+                        figure: {
+                            margin: 0,
+                            figcaption: {
+                                margin: 0
+                            }
                         },
                         'code:before': {
                             content: 'none'
@@ -94,6 +102,18 @@ module.exports = {
                         },
                         'h4,h5,h6': {
                             color: theme('colors.gray.100')
+                        },
+                        figure: {
+                            margin: 0,
+                            figcaption: {
+                                margin: 0
+                            }
+                        },
+                        'code:before': {
+                            content: 'none'
+                        },
+                        'code:after': {
+                            content: 'none'
                         },
                         details: {
                             backgroundColor: theme('colors.gray.800')

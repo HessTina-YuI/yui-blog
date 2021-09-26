@@ -43,8 +43,8 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
 
     return (
         <PostLayout>
-            <div className="w-full flex">
-                <article className="w-3/5 ml-32 prose">
+            <div className="w-full flex justify-center">
+                <article className="w-3/5 prose">
                     <MDXLayoutRenderer
                         toc={toc}
                         mdxSource={mdxSource}

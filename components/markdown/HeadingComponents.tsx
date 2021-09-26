@@ -15,7 +15,7 @@ interface HTMLHeadingProps {
     id?: string;
 }
 
-const Heading: React.FC<HeadingProps> = ({ level, id, children }) => {
+const HeadingComponents: React.FC<HeadingProps> = ({ level, id, children }) => {
 
     const content = children instanceof Array ? children : new Array(children);
 
@@ -49,7 +49,7 @@ const Heading: React.FC<HeadingProps> = ({ level, id, children }) => {
     );
 };
 
-export default Heading;
+export default HeadingComponents;
 
 const HTMLHeading: React.FC<HTMLHeadingProps> = ({ level, id, children }) => {
     return React.createElement(level.toString(), { id }, children);

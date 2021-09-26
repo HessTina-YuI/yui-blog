@@ -18,7 +18,7 @@ const CountCard: React.FC<CountCardProps> = ({ className }) => {
             count: 10,
             description: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试',
             icon: <RiBookFill/>,
-            url: '/article'
+            url: '/blog'
         }, {
             id: '2',
             name: '故事',
