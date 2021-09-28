@@ -56,7 +56,7 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
                 </article>
                 <div className="ml-12 relative">
                     <TOCComponent
-                        className="overflow-y-scroll sticky top-0 hidden lg:block"
+                        className="overflow-y-scroll sticky top-0 hidden lg:block no-scroll-theme"
                         toc={toc}
                         frontMatter={frontMatter}/>
                 </div>

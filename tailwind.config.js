@@ -3,7 +3,7 @@ const colors = require('tailwindcss/colors');
 
 module.exports = {
     mode: 'jit',
-    purge: ['./pages/**/*.tsx', './components/**/*.tsx', './layouts/**/*.tsx', './lib/**/*.ts'],
+    purge: [ './pages/**/*.tsx', './components/**/*.tsx', './layouts/**/*.tsx', './lib/**/*.ts' ],
     darkMode: 'class', // or 'media' or 'class'
     theme: {
         extend: {
@@ -17,12 +17,12 @@ module.exports = {
                         color: theme('colors.gray.700'),
                         a: {
                             textDecoration: 'none',
+                            position: 'relative',
                             color: theme('colors.blue.500'),
                             '&:hover': {
                                 color: theme('colors.blue.600'),
-                                textDecoration: 'none'
                             },
-                            code: { color: theme('colors.blue.400') }
+                            code: { color: theme('colors.blue.400') },
                         },
                         h1: {
                             fontWeight: '700',
@@ -80,6 +80,7 @@ module.exports = {
                     css: {
                         color: theme('colors.gray.300'),
                         a: {
+                            textDecoration: 'none',
                             color: theme('colors.primary.500'),
                             '&:hover': {
                                 color: theme('colors.primary.400')
@@ -146,7 +147,7 @@ module.exports = {
     },
     variants: {
         extend: {},
-        typography: ['dark']
+        typography: [ 'dark' ]
     },
-    plugins: [require('@tailwindcss/typography')]
+    plugins: [ require('@tailwindcss/typography') ]
 };
