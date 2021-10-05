@@ -3,6 +3,7 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import { bundleMDX } from 'mdx-bundler';
 import readingTime, { ReadTimeResults } from 'reading-time';
+import { compareDesc, format } from 'date-fns'
 import getAllFilesRecursively from '@/lib/files';
 // remark
 import remarkGfm from 'remark-gfm';
@@ -28,6 +29,7 @@ export interface IFrontMatterAttribute {
     fileName: string;
     title?: string;
     date?: string | null;
+    hero?: string;
     tags?: Array<string>;
 }
 
@@ -119,7 +121,7 @@ export const getFileBySlug = async (type: string, slug: string): Promise<IBlogAt
             slug: slug,
             fileName: fs.existsSync(mdxPath) ? `${slug}.mdx` : `${slug}.md`,
             ...frontmatter,
-            date: frontmatter.date ? new Date(frontmatter.date).toISOString() : null
+            date: frontmatter.date ? format(new Date(frontmatter.date), 'yyyy-MM-dd') : null
         }
     };
 };
@@ -144,9 +146,9 @@ export const getAllFilesFrontMatter = async (folder: string): Promise<IFrontMatt
         allFrontMatter.push({
             ...frontmatter,
             slug: formatSlug(fileName),
-            date: frontmatter.date ? new Date(frontmatter.date).toISOString() : null
+            date: frontmatter.date ? format(new Date(frontmatter.date), 'yyyy-MM-dd') : null
         });
     });
 
-    return allFrontMatter.sort((a, b) => dateSortDesc(a.date, b.date));
+    return allFrontMatter.sort(compareDesc);
 };

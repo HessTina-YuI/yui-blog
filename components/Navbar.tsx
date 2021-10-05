@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { BiArrowToLeft, BiArrowToRight } from 'react-icons/bi';
-import { RiBuilding2Fill, RiBookFill, RiChatHistoryFill, RiBallPenFill, RiFolder4Fill, RiUser4Fill } from 'react-icons/ri';
+import {
+    RiBuilding2Fill,
+    RiBookFill,
+    RiChatHistoryFill,
+    RiBallPenFill,
+    RiFolder4Fill,
+    RiUser4Fill
+} from 'react-icons/ri';
 import NavbarItem, { NavBarItemProps } from '@/components/NavbarItem';
 
 let waitAnimationEnd: boolean = true;
@@ -45,7 +52,7 @@ const Navbar: React.FC = ({ children }) => {
                 title: '关于',
                 url: '/about',
                 icon: <RiUser4Fill/>
-            },
+            }
         ]);
     }, []);
 
@@ -77,8 +84,7 @@ const Navbar: React.FC = ({ children }) => {
                 className="h-full fixed top-0 left-0 z-20 bg-white shadow-lg text-black transition-all duration-500"
                 style={{ width: `${navWidth}rem` }} onMouseOver={navMouseOver} onMouseLeave={navMouseLeave}>
                 <div className="w-full h-32 mt-2 mb-4">
-                    <div className="my-2 pl-1.5 rounded-lg flex items-center hover:cursor-pointer">
-                    </div>
+                    <div className="my-2 pl-1.5 rounded-lg flex items-center hover:cursor-pointer"/>
                 </div>
                 <ul className="w-full">
                     {

@@ -1,4 +1,6 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import React, { useEffect, useRef, useState } from 'react';
+import Typed from 'typed.js';
 import {
     formatSlug,
     getAllFilesFrontMatter,
@@ -7,10 +9,10 @@ import {
     IBlogAttribute,
     IFrontMatterAttribute
 } from '@/lib/mdx';
-import { MDXLayoutRenderer } from '@/components/markdown/MDXComponents';
 import PostLayout from '@/layouts/PostLayout';
-import React, { useEffect, useState } from 'react';
+import { MDXLayoutRenderer } from '@/components/markdown/MDXComponents';
 import TOCComponent from '@/components/markdown/TOCComponent';
+import Image from '@/components/Image';
 
 interface BlogProps {
     post: IBlogAttribute;
@@ -24,28 +26,55 @@ interface StaticProps {
 
 const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
 
+    const el = useRef<HTMLDivElement>(null);
+    const typed = useRef<Typed>(null);
+
     const { mdxSource, toc, frontMatter } = post;
 
-    const [stylesItem, setStylesItem] = useState('');
+    const [loadFinish, setLoadFinish] = useState('');
 
     useEffect(() => {
-        setStylesItem('footnote-back');
+        const options = {
+            strings: [post.frontMatter.title],
+            typeSpeed: 100,
+            backSpeed: 50,
+            shuffle: true,
+            loop: true
+        };
+
+        // @ts-ignore
+        typed.current = new Typed(el.current, options);
+        return () => {
+            // @ts-ignore
+            typed.current.destroy();
+        };
+    }, [post.frontMatter.title]);
+
+    useEffect(() => {
+        setLoadFinish('footnote-back');
     }, []);
 
     useEffect(() => {
-        if (stylesItem) {
-            const items = document.querySelectorAll(`.${stylesItem}`);
+        if (loadFinish) {
+            const items = document.querySelectorAll(`.${loadFinish}`);
             items.forEach((val) => {
                 val.innerHTML = '←';
             });
         }
-    }, [stylesItem]);
+    }, [loadFinish]);
 
     return (
         <PostLayout>
-            <div className="w-full bg-fixed bg-cover bg-center"
-                 style={{ height: '60vh', backgroundImage: `url(/static/images/2021-02-25-01.jpg)` }}/>
-            <div className="w-full py-10 flex justify-center bg-gray-100">
+            <div className="w-full sticky top-0 bg-cover flex justify-center items-center"
+                // @ts-ignore
+                 style={{ height: '60vh', zIndex: '-10' }}>
+                <Image src={post.frontMatter.hero ?? ''} alt="hero" layout="fill" objectFit="cover"
+                       objectPosition="top"/>
+                <div className="text-4xl text-white z-0">
+                    <span ref={el}/>
+                </div>
+            </div>
+            <div className="w-full py-10 pl-20 flex justify-center bg-gray-100">
                 <article className="w-3/5 prose">
                     <MDXLayoutRenderer
                         toc={toc}
@@ -54,11 +83,10 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
                         prev={prev}
                         next={next}/>
                 </article>
-                <div className="ml-12 relative">
+                <div className="ml-12 w-1/5 relative">
                     <TOCComponent
                         className="overflow-y-scroll sticky top-0 hidden lg:block no-scroll-theme"
-                        toc={toc}
-                        frontMatter={frontMatter}/>
+                        toc={toc}/>
                 </div>
             </div>
         </PostLayout>

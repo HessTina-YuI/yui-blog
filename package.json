@@ -14,6 +14,7 @@
     "@tailwindcss/typography": "^0.4.1",
     "add": "^2.0.6",
     "boxicons": "^2.0.9",
+    "date-fns": "^2.24.0",
     "esbuild": "^0.12.28",
     "framer-motion": "^4.1.17",
     "github-slugger": "^1.4.0",
@@ -37,7 +38,7 @@
     "remark-footnotes": "^4.0.1",
     "remark-gfm": "^2.0.0",
     "remark-math": "^5.1.0",
-    "yarn": "^1.22.11"
+    "typed.js": "^2.0.12"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^11.1.0",

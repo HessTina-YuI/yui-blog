@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import TaskInterval from '@/lib/task-interval';
 import { IProps } from '@/interface/IProps';
+import Image from '@/components/Image';
 
 interface BannerProps extends IProps {
     images?: Array<ImageType>;
@@ -8,6 +9,7 @@ interface BannerProps extends IProps {
 
 interface ImageType {
     image?: string;
+    alt?: string;
 }
 
 const Banner: React.FC<BannerProps> = ({ images = [], className }) => {
@@ -39,9 +41,10 @@ const Banner: React.FC<BannerProps> = ({ images = [], className }) => {
             <div className="w-full h-full relative">
                 {
                     images?.map((item, index) =>
-                        <div key={index} className={`w-full h-full rounded-2xl bg-no-repeat bg-center absolute
-                                transition-opacity duration-700 ${selectImg === index ? 'opacity-100' : 'opacity-0'}`}
-                             style={{ backgroundImage: `url(${item.image})` }}/>
+                        <div key={index} className={`w-full h-full rounded-2xl bg-no-repeat bg-center absolute overflow-hidden
+                                transition-opacity duration-700 ${selectImg === index ? 'opacity-100' : 'opacity-0'}`}>
+                            <Image src={item.image ?? ''} alt={item.alt ?? ''} layout="fill" objectFit="cover"/>
+                        </div>
                     )
                 }
             </div>
