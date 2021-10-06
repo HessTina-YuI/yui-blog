@@ -21,7 +21,7 @@ const NavBarItem: React.FC<NavBarItemProps> = ({ ...props }) => {
         const routeUrl = router.pathname;
         const url = props.url;
 
-        if (routeUrl === '/loading') {
+        if (routeUrl === '/loading' || routeUrl === '/404') {
             return;
         }
 
