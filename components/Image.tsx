@@ -23,8 +23,11 @@ const toBase64 = (str: string) =>
 const Image: React.FC<ImageProps> = ({ ...rest }) => {
     return (
         <>
-            <NextImage {...rest} placeholder="blur"
-                       blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 600))}`}/>
+            {
+                rest.src &&
+                <NextImage {...rest} placeholder="blur"
+                           blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 600))}`}/>
+            }
         </>
     );
 };

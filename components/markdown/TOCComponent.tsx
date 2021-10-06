@@ -99,7 +99,8 @@ const TOCComponent: React.FC<TOCComponentProps> = ({ toc, className }) => {
             {
                 toc?.map((value, index) => {
                     return <div
-                        className={`my-2 text-base hover:cursor-pointer hover:text-blue-600 
+                        className={`py-2 px-1 rounded-lg text-sm hover:cursor-pointer hover:text-blue-600 
+                                    hover:bg-gray-200
                                     ${levelEnum[value.depth - minLevel]} 
                                     ${value.url === activeHeading ? 'text-blue-500' : ''}`}
                         key={index}

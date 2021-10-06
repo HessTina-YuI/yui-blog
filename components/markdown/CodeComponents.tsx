@@ -18,12 +18,12 @@ const CodeComponents: React.FC = ({ children }) => {
         return '';
     })();
 
-    const notify = () => toast('Here is your toast.');
+    const notify = () => toast('功能还在施工中');
 
     const copyClick = () => {
         if (textInput && textInput.current && textInput.current.textContent) {
             navigator.clipboard.writeText(textInput.current.textContent).then(r => console.error(r));
-            toast.success('复制到剪贴板');
+            toast('复制到剪贴板');
         }
     };
 

@@ -12,6 +12,18 @@
         display: none;
     }
 
+    .prime-scroll-theme {
+
+    }
+
+    .prime-scroll-theme::-webkit-scrollbar {
+        @apply w-2
+    }
+
+    .prime-scroll-theme::-webkit-scrollbar-thumb {
+        @apply rounded-full bg-blue-400
+    }
+
     .overscroll-y-none {
         overscroll-behavior-y: none;
     }

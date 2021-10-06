@@ -22,7 +22,6 @@ const PageLayout: React.FC = ({ children }) => {
                 </Fragment>
             </AnimatePresence>
         </motion.div>
-
     );
 };
 

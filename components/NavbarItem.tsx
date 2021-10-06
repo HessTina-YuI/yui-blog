@@ -18,8 +18,12 @@ const NavBarItem: React.FC<NavBarItemProps> = ({ ...props }) => {
     const router = useRouter();
 
     useEffect(() => {
-        const routeUrl = router.route;
+        const routeUrl = router.pathname;
         const url = props.url;
+
+        if (routeUrl === '/loading') {
+            return;
+        }
 
         if (url === '/' && routeUrl === '/') {
             setActive(true);

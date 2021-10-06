@@ -13,6 +13,7 @@ import PostLayout from '@/layouts/PostLayout';
 import { MDXLayoutRenderer } from '@/components/markdown/MDXComponents';
 import TOCComponent from '@/components/markdown/TOCComponent';
 import Image from '@/components/Image';
+import SkipTool from '@/components/SkipTool';
 
 interface BlogProps {
     post: IBlogAttribute;
@@ -31,7 +32,7 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
 
     const { mdxSource, toc, frontMatter } = post;
 
-    const [loadFinish, setLoadFinish] = useState('');
+    const [loadFinish, setLoadFinish] = useState<string>('');
 
     useEffect(() => {
         const options = {
@@ -65,13 +66,24 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
 
     return (
         <PostLayout>
-            <div className="w-full sticky top-0 bg-cover flex justify-center items-center"
+            <div className="w-full sticky top-0 bg-cover relative flex justify-center items-center"
                 // @ts-ignore
                  style={{ height: '60vh', zIndex: '-10' }}>
                 <Image src={post.frontMatter.hero ?? ''} alt="hero" layout="fill" objectFit="cover"
                        objectPosition="top"/>
-                <div className="text-4xl text-white z-0">
+                <div className="text-5xl text-white z-0">
                     <span ref={el}/>
+                </div>
+                <div className="text-base text-white flex absolute bottom-10 z-0">
+                    <div>
+                        <span>文章发布于 {frontMatter.date}</span>
+                    </div>
+                    <div className="mx-10">
+                        <span>文本字数约为 {(frontMatter.readingTime.words / 1000).toFixed(1)}k 字</span>
+                    </div>
+                    <div>
+                        <span>阅读时长约为 {(frontMatter.readingTime.minutes).toFixed(0)} 分钟</span>
+                    </div>
                 </div>
             </div>
             <div className="w-full py-10 pl-20 flex justify-center bg-gray-100">
@@ -85,10 +97,11 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
                 </article>
                 <div className="ml-12 w-1/5 relative">
                     <TOCComponent
-                        className="overflow-y-scroll sticky top-0 hidden lg:block no-scroll-theme"
+                        className="h-96 overflow-hidden overflow-y-scroll sticky top-4 hidden lg:block prime-scroll-theme"
                         toc={toc}/>
                 </div>
             </div>
+            <SkipTool showHeight={400} prev={prev ? prev.slug : null} next={next ? next.slug : null}/>
         </PostLayout>
     );
 };

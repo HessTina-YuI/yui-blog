@@ -20,6 +20,7 @@
     "github-slugger": "^1.4.0",
     "gray-matter": "^4.0.3",
     "hast-util-to-string": "^2.0.0",
+    "js-base64": "^3.7.2",
     "mdx-bundler": "^6.0.1",
     "next": "11.1.0",
     "next-themes": "^0.0.15",
@@ -38,6 +39,7 @@
     "remark-footnotes": "^4.0.1",
     "remark-gfm": "^2.0.0",
     "remark-math": "^5.1.0",
+    "sharp": "^0.29.1",
     "typed.js": "^2.0.12"
   },
   "devDependencies": {
