@@ -9,8 +9,8 @@ const Loading: NextPage = () => {
     const router = useRouter();
 
     useEffect(() => {
-        const { url } = router.query;
-        url ? router.push(Base64.decode(url.toString())) : router.push('404');
+        const { from, to } = router.query;
+        to ? router.replace(Base64.decode(to.toString())) : router.push('404');
     }, []);
 
     return (

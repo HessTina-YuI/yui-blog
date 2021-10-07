@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 import { animateScroll } from 'react-scroll';
 import toast from 'react-hot-toast';
 import { IoChevronBackOutline, IoChevronForwardOutline, IoArrowUpOutline, IoArrowDownOutline } from 'react-icons/io5';
-import { Base64 } from 'js-base64';
 
 interface SkipToolProps {
     showHeight?: number;
+    current: string | URL;
     prev?: string | URL | null;
     next?: string | URL | null;
 }
@@ -21,6 +21,22 @@ const SkipTool: React.FC<SkipToolProps> = ({ ...props }) => {
         const router = useRouter();
 
         useEffect(() => {
+            const bindHandleScroll = (event: any) => {
+
+                const scrollTop = event.target.documentElement.scrollTop;
+                const process = Math.floor(scrollTop * 100 / VALID_HEIGHT);
+
+                const showHeight = props.showHeight ?? 0;
+
+                if (scrollTop >= showHeight) {
+                    setShow(true);
+                } else if (scrollTop < showHeight) {
+                    setShow(false);
+                }
+
+                setProcess(process > 100 ? 100 : process);
+            };
+
             window.addEventListener('scroll', bindHandleScroll);
 
             const browserHeight = document.body.scrollHeight || document.documentElement.scrollHeight;
@@ -36,32 +52,13 @@ const SkipTool: React.FC<SkipToolProps> = ({ ...props }) => {
             return () => {
                 window.removeEventListener('scroll', bindHandleScroll);
             };
-        }, []);
-
-        const bindHandleScroll = (event: any) => {
-
-            const scrollTop = event.target.documentElement.scrollTop;
-            const process = Math.floor(scrollTop * 100 / VALID_HEIGHT);
-
-            const showHeight = props.showHeight ?? 0;
-
-            if (scrollTop >= showHeight) {
-                setShow(true);
-            } else if (scrollTop < showHeight) {
-                setShow(false);
-            }
-
-            setProcess(process > 100 ? 100 : process);
-        };
+        }, [props.showHeight]);
 
         const prevClick = () => {
             if (props.prev) {
-                router.push({
-                    pathname: '/loading',
-                    query: {
-                        url: Base64.encode('/blog/' + props.prev.toString())
-                    }
-                });
+                router.push('/blog/[...slug]', '/blog/' + props.prev)
+                    .then(r => {
+                    });
             } else {
                 toast('已经是第一篇了');
             }
@@ -69,12 +66,9 @@ const SkipTool: React.FC<SkipToolProps> = ({ ...props }) => {
 
         const nextClick = () => {
             if (props.next) {
-                router.push({
-                    pathname: '/loading',
-                    query: {
-                        url: Base64.encode('/blog/' + props.next.toString())
-                    }
-                });
+                router.push('/blog/[...slug]', '/blog/' + props.next)
+                    .then(r => {
+                    });
             } else {
                 toast('已经是最后一篇了');
             }

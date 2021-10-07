@@ -3,7 +3,7 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import { bundleMDX } from 'mdx-bundler';
 import readingTime, { ReadTimeResults } from 'reading-time';
-import { compareDesc, format } from 'date-fns'
+import { compareDesc, format } from 'date-fns';
 import getAllFilesRecursively from '@/lib/files';
 // remark
 import remarkGfm from 'remark-gfm';
@@ -90,7 +90,7 @@ export const getFileBySlug = async (type: string, slug: string): Promise<IBlogAt
             options.remarkPlugins = [
                 ...(options.remarkPlugins ?? []),
                 remarkGfm,
-                [remarkFootnotes, { inlineNotes: false, footnoteHtml: '<a>test</a>' }],
+                [remarkFootnotes, { inlineNotes: false }],
                 remarkMath,
                 remarkDirective,
                 [remarkTocHeadings, { exportRef: toc }],

@@ -1,5 +1,5 @@
 import '@/css/tailwind.css';
-import '@/css/prism.css'
+import '@/css/prism.css';
 
 import { ThemeProvider } from 'next-themes';
 import type { AppProps } from 'next/app';
@@ -17,7 +17,7 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
                     exitBeforeEnter
                     initial={false}
                 >
-                    <Component {...pageProps} key={router.route}/>
+                    <Component {...pageProps} key={router.asPath}/>
                 </AnimatePresence>
             </Navbar>
         </ThemeProvider>

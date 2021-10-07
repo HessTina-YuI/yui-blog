@@ -1,5 +1,5 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import React, { useEffect, useRef, useState } from 'react';
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Typed from 'typed.js';
 import {
     formatSlug,
@@ -30,9 +30,20 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
     const el = useRef<HTMLDivElement>(null);
     const typed = useRef<Typed>(null);
 
-    const { mdxSource, toc, frontMatter } = post;
+    const [footnotes, setFootnotes] = useState<string>('');
 
-    const [loadFinish, setLoadFinish] = useState<string>('');
+    useEffect(() => {
+        setFootnotes('.footnote-back');
+    }, []);
+
+    useEffect(() => {
+        if (footnotes) {
+            const items = document.querySelectorAll(footnotes);
+            items.forEach((val) => {
+                val.innerHTML = '←';
+            });
+        }
+    }, [footnotes]);
 
     useEffect(() => {
         const options = {
@@ -51,19 +62,6 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
         };
     }, [post.frontMatter.title]);
 
-    useEffect(() => {
-        setLoadFinish('footnote-back');
-    }, []);
-
-    useEffect(() => {
-        if (loadFinish) {
-            const items = document.querySelectorAll(`.${loadFinish}`);
-            items.forEach((val) => {
-                val.innerHTML = '←';
-            });
-        }
-    }, [loadFinish]);
-
     return (
         <PostLayout>
             <div className="w-full sticky top-0 bg-cover relative flex justify-center items-center"
@@ -76,32 +74,35 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
                 </div>
                 <div className="text-base text-white flex absolute bottom-10 z-0">
                     <div>
-                        <span>文章发布于 {frontMatter.date}</span>
+                        <span>文章发布于 {post.frontMatter.date}</span>
                     </div>
                     <div className="mx-10">
-                        <span>文本字数约为 {(frontMatter.readingTime.words / 1000).toFixed(1)}k 字</span>
+                        <span>文本字数约为 {(post.frontMatter.readingTime.words / 1000).toFixed(1)}k 字</span>
                     </div>
                     <div>
-                        <span>阅读时长约为 {(frontMatter.readingTime.minutes).toFixed(0)} 分钟</span>
+                        <span>阅读时长约为 {(post.frontMatter.readingTime.minutes).toFixed(0)} 分钟</span>
                     </div>
                 </div>
             </div>
             <div className="w-full py-10 pl-20 flex justify-center bg-gray-100">
                 <article className="w-3/5 prose">
                     <MDXLayoutRenderer
-                        toc={toc}
-                        mdxSource={mdxSource}
-                        frontMatter={frontMatter}
+                        toc={post.toc}
+                        mdxSource={post.mdxSource}
+                        frontMatter={post.frontMatter}
                         prev={prev}
                         next={next}/>
                 </article>
                 <div className="ml-12 w-1/5 relative">
                     <TOCComponent
                         className="h-96 overflow-hidden overflow-y-scroll sticky top-4 hidden lg:block prime-scroll-theme"
-                        toc={toc}/>
+                        toc={post.toc}/>
                 </div>
             </div>
-            <SkipTool showHeight={400} prev={prev ? prev.slug : null} next={next ? next.slug : null}/>
+            <SkipTool showHeight={400}
+                      current={post.frontMatter.slug}
+                      prev={prev ? prev.slug : null}
+                      next={next ? next.slug : null}/>
         </PostLayout>
     );
 };
