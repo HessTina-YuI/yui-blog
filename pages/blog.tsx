@@ -2,8 +2,9 @@ import { NextPage } from 'next';
 import { motion } from 'framer-motion';
 import PageLayout from '@/layouts/PageLayout';
 import SectionContainer from '@/components/SectionContainer';
+import Link from '@/components/Link';
 
-const item = [0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7];
+const item = ['a', 'b', 'a', 'b', 'a', 'b', 'a', 'b', 'a', 'b'];
 
 const variantsParent = {
     hidden: { opacity: 0 },
@@ -33,11 +34,12 @@ const Blog: NextPage = () => {
                     {
                         item.map((value, index) => {
                             return (
-                                <motion.div key={index} className="w-full h-40 p-2"
-                                            style={{ backgroundColor: colors[index % 5] }}
-                                            variants={variantsChildren}>
-
-                                </motion.div>
+                                <Link href={`/blog/${value}`} key={index}>
+                                    <motion.div className="w-full h-40 p-2"
+                                                style={{ backgroundColor: colors[index % 5] }}
+                                                variants={variantsChildren}>
+                                    </motion.div>
+                                </Link>
                             );
                         })
                     }

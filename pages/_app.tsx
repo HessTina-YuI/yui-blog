@@ -15,6 +15,7 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
             <Navbar>
                 <AnimatePresence
                     exitBeforeEnter
+                    onExitComplete={() => window.scrollTo(0, 0)}
                     initial={false}
                 >
                     <Component {...pageProps} key={router.asPath}/>
