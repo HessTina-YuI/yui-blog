@@ -16,8 +16,8 @@ const variants = {
         y: 0,
         opacity: 1,
         transition: {
-            delay: i * 0.2,
-            duration: 0.5
+            delay: i * 0.4,
+            duration: 1
         }
     })
 };
@@ -50,28 +50,28 @@ const Blog: NextPage = ({ posts, pagination }) => {
     }, [currentPage]);
 
     const prev = () => {
-        setCurrentPage(currentPage - 1);
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     };
 
     const next = () => {
-        setCurrentPage(currentPage + 1);
+        if (currentPage < pagination.totalPages) {
+            setCurrentPage(currentPage + 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     };
 
     return (
         <PageLayout>
             <SectionContainer>
-                <button onClick={prev}>
-                    prev
-                </button>
-                <button className="ml-4" onClick={next}>
-                    next
-                </button>
-                <div className="w-full xl:w-2/3 grid grid-cols-1 xl:grid-cols-2">
+                <div className="w-full xl:w-2/3 grid grid-cols-1">
                     {
                         list.map((value, index) => {
                             return (
                                 <Link href={`/blog/${value.slug}`} key={value.slug}>
-                                    <motion.div className="w-full h-40 p-2"
+                                    <motion.div className="w-full h-60 p-2 my-2 rounded-xl shadow-lg"
                                                 style={{ backgroundColor: colors[index % 5] }}
                                                 custom={index}
                                                 initial="initial"
@@ -85,6 +85,20 @@ const Blog: NextPage = ({ posts, pagination }) => {
                         })
                     }
                 </div>
+                <div className="w-full xl:w-2/3 h-20 mt-2 pb-4 grid grid-cols-2 gap-x-6">
+                    <div className={`w-full flex justify-center items-center bg-white rounded-xl shadow-sm
+                                    transition-all duration-300 hover:bg-blue-400 hover:text-white
+                                    ${currentPage > 1 ? 'opacity-100' : 'opacity-0'}`}
+                         onClick={prev}>
+                        上一页
+                    </div>
+                    <div className={`w-full flex justify-center items-center bg-white rounded-xl shadow-sm
+                                    transition-all duration-300 hover:bg-blue-400 hover:text-white
+                                    ${currentPage < pagination.totalPages ? 'opacity-100' : 'opacity-0'}`}
+                         onClick={next}>
+                        下一页
+                    </div>
+                </div>
             </SectionContainer>
         </PageLayout>
     );
@@ -92,7 +106,8 @@ const Blog: NextPage = ({ posts, pagination }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-    const posts = await getAllFilesFrontMatter('blog');
+    // const posts = await getAllFilesFrontMatter('blog');
+    const posts = [{ slug: 'a' }, { slug: 'b' }, { slug: 'c' }, { slug: 'd' }, { slug: 'e' }, { slug: 'f' }, { slug: 'g' }, { slug: 'h' }, { slug: 'i' }];
     const pagination = {
         currentPage: 1,
         totalPages: Math.ceil(posts.length / POSTS_PER_PAGE),
