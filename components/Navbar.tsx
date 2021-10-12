@@ -16,7 +16,7 @@ const narrowWidth = 4;
 
 const Navbar: React.FC = ({ children }) => {
 
-    const [navItem, setNavItem] = useState<Array<NavBarItemProps>>();
+    const [navItem, setNavItem] = useState<NavBarItemProps[]>();
     const [navWidth, setNavWidth] = useState<number>(initWidth);
     const [navOpen, setNavOpen] = useState<boolean>(true);
     const [navMouseOn, setNavMouseOn] = useState<boolean>(false);

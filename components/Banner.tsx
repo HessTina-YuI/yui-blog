@@ -4,7 +4,7 @@ import { IProps } from '@/interface/IProps';
 import Image from '@/components/Image';
 
 interface BannerProps extends IProps {
-    images?: Array<ImageType>;
+    images?: ImageType[];
 }
 
 interface ImageType {

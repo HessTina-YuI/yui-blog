@@ -7,7 +7,7 @@ enum levelEnum {
 interface HeadingProps {
     level: levelEnum;
     id?: string;
-    children?: string | ReactElement | Array<ReactElement>;
+    children?: string | ReactElement | ReactElement[];
 }
 
 interface HTMLHeadingProps {

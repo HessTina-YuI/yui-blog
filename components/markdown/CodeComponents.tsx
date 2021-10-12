@@ -8,7 +8,7 @@ const CodeComponents: React.FC = ({ children }) => {
 
     const language: string = (() => {
         // @ts-ignore
-        const name: Array<string> = children.props.className ? children.props.className.split(' ') : [];
+        const name: string[] = children.props.className ? children.props.className.split(' ') : [];
         for (const temp of name) {
             if (temp.indexOf('language-') != -1) {
                 return temp.substring(9, temp.length);

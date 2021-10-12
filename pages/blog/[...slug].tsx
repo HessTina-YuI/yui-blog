@@ -129,8 +129,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     // @ts-ignore
     const postIndex = allPosts.findIndex((post: StaticProps) => formatSlug(post.slug) === params.slug.join('/'));
-    const prev = allPosts[postIndex + 1] || null;
-    const next = allPosts[postIndex - 1] || null;
+    const prev = allPosts[postIndex - 1] || null;
+    const next = allPosts[postIndex + 1] || null;
     // @ts-ignore
     const post = await getFileBySlug('blog', params.slug.join('/'));
 

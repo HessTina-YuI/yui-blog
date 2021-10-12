@@ -9,7 +9,7 @@ interface CountCardProps extends IProps {
 
 const CountCard: React.FC<CountCardProps> = ({ className }) => {
 
-    const [card, setCard] = useState<Array<CountCardItemProps>>();
+    const [card, setCard] = useState<CountCardItemProps[]>();
 
     useEffect(() => {
         setCard([{

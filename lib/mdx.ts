@@ -19,7 +19,7 @@ import rehypePrism from 'rehype-prism-plus';
 
 export interface IBlogAttribute {
     mdxSource: any;
-    toc: Array<ITocAttribute>;
+    toc: ITocAttribute[];
     frontMatter: IFrontMatterAttribute;
 }
 
@@ -30,7 +30,7 @@ export interface IFrontMatterAttribute {
     title?: string;
     date?: string | null;
     hero?: string;
-    tags?: Array<string>;
+    tags?: string[];
     summary?: string;
 }
 

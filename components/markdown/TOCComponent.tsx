@@ -3,7 +3,7 @@ import { ITocAttribute } from '@/lib/remark-toc-headings';
 import { IProps } from '@/interface/IProps';
 
 interface TOCComponentProps extends IProps {
-    toc?: Array<ITocAttribute>;
+    toc?: ITocAttribute[];
 }
 
 interface IUrlTop {
@@ -15,16 +15,16 @@ const levelEnum = [
     '', 'pl-4', 'pl-8', 'pl-10', 'pl-12', 'pl-14'
 ];
 
-let urlTops: Array<IUrlTop> = [];
+let urlTops: IUrlTop[] = [];
 
 const TOCComponent: React.FC<TOCComponentProps> = ({ toc, className }) => {
 
     const [minLevel, setMinLevel] = useState<number>(0);
-    // const [urlTop, setUrlTop] = useState<Array<IUrlTop>>([]);
+
     const [activeHeading, setActiveHeading] = useState<string>('');
 
     useEffect(() => {
-        let tempUrlTops: Array<IUrlTop> = [];
+        let tempUrlTops: IUrlTop[] = [];
 
         toc?.forEach((value) => {
             const url = value.url.slice(1, value.url.length);

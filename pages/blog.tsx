@@ -1,106 +1,90 @@
 import { useEffect, useState } from 'react';
 import { GetStaticProps, NextPage } from 'next';
-import { motion, useCycle } from 'framer-motion';
+import { useRouter } from 'next/router';
+import { motion } from 'framer-motion';
 import PageLayout from '@/layouts/PageLayout';
 import SectionContainer from '@/components/SectionContainer';
 import Link from '@/components/Link';
 import { getAllFilesFrontMatter, IFrontMatterAttribute } from '@/lib/mdx';
 
-const variantsParent = {
-    show: {
-        transition: { staggerChildren: 0.2, delayChildren: 0.2 }
+const variants = {
+    initial: {
+        y: -10,
+        opacity: 0
     },
-    hidden: {
-        transition: { staggerChildren: 0.1, staggerDirection: -1 }
-    }
-};
-
-const variantsChildren = {
-    show: {
+    show: (i: number) => ({
         y: 0,
         opacity: 1,
         transition: {
-            y: { stiffness: 1000, velocity: -100 }
+            delay: i * 0.2,
+            duration: 0.5
         }
-    },
-    hidden: {
-        y: 50,
-        opacity: 0,
-        transition: {
-            y: { stiffness: 1000 }
-        }
-    }
+    })
 };
 
 const colors = ['#FF008C', '#D309E1', '#9C1AFF', '#7700FF', '#4400FF'];
 
-export const POSTS_PER_PAGE = 5;
-
-let i = 0;
+export const POSTS_PER_PAGE = 4;
 
 // @ts-ignore
-const Blog: NextPage = ({ posts, initialDisplayPosts, pagination }) => {
+const Blog: NextPage = ({ posts, pagination }) => {
 
-    const [isOpen, toggleOpen] = useCycle(false, true);
+    const [list, setList] = useState<IFrontMatterAttribute[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(pagination.currentPage);
 
-    const [test, setTest] = useState<Array<any>>([]);
+    const router = useRouter();
 
     useEffect(() => {
-        toggleOpen();
-        setTest([{ name: 'a', id: i++ }, { name: 'a', id: i++ }, { name: 'a', id: i++ }, {
-            name: 'a', id: i++
-        }, { name: 'a', id: i++ }]);
-    }, []);
+        let page: number = 1;
+        if (router.query.page && typeof router.query.page === 'string') {
+            page = parseInt(router.query.page, 0);
+        }
 
-    let b: NodeJS.Timeout | null = null;
+        if (page > 1 && page <= pagination.totalPages) {
+            setCurrentPage(page);
+        }
+    }, [router.query.page]);
 
-    const a = () => {
-        return setTimeout(() => {
-            const b = [{ name: 'a', id: i++ }, { name: 'a', id: i++ }, { name: 'a', id: i++ }, {
-                name: 'a',
-                id: i++
-            }, { name: 'a', id: i++ }];
+    useEffect(() => {
+        setList(posts.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE));
+    }, [currentPage]);
 
-            setTest(b);
-
-            toggleOpen();
-        }, 2000);
+    const prev = () => {
+        setCurrentPage(currentPage - 1);
     };
 
-    const click = () => {
-        toggleOpen();
-
-        setTimeout(() => {
-            const b = [{ name: 'a', id: i++ }, { name: 'a', id: i++ }, { name: 'a', id: i++ }, { name: 'a', id: i++ },
-                { name: 'a', id: i++ }];
-            setTest(b);
-
-            toggleOpen();
-        }, 0.1 * 1000 * 5 + 100);
+    const next = () => {
+        setCurrentPage(currentPage + 1);
     };
 
     return (
         <PageLayout>
             <SectionContainer>
-                <button onClick={click}>
-                    add
+                <button onClick={prev}>
+                    prev
                 </button>
-                <motion.div className="w-full xl:w-2/3 grid grid-cols-1 xl:grid-cols-2"
-                            initial={false} animate={isOpen ? 'show' : 'hidden'}
-                            variants={variantsParent}>
+                <button className="ml-4" onClick={next}>
+                    next
+                </button>
+                <div className="w-full xl:w-2/3 grid grid-cols-1 xl:grid-cols-2">
                     {
-                        test.map((value, index) => {
+                        list.map((value, index) => {
                             return (
-                                <Link href={`/blog/${value.name}`} key={value.id}>
+                                <Link href={`/blog/${value.slug}`} key={value.slug}>
                                     <motion.div className="w-full h-40 p-2"
                                                 style={{ backgroundColor: colors[index % 5] }}
-                                                variants={variantsChildren}>
+                                                custom={index}
+                                                initial="initial"
+                                                animate="show"
+                                                exit="show"
+                                                variants={variants}>
+                                        {value.slug}
                                     </motion.div>
                                 </Link>
                             );
                         })
                     }
-                </motion.div>
+                </div>
             </SectionContainer>
         </PageLayout>
     );
@@ -109,13 +93,13 @@ const Blog: NextPage = ({ posts, initialDisplayPosts, pagination }) => {
 
 export const getStaticProps: GetStaticProps = async () => {
     const posts = await getAllFilesFrontMatter('blog');
-    const initialDisplayPosts = posts.slice(0, POSTS_PER_PAGE);
     const pagination = {
         currentPage: 1,
-        totalPages: Math.ceil(posts.length / POSTS_PER_PAGE)
+        totalPages: Math.ceil(posts.length / POSTS_PER_PAGE),
+        total: posts.length
     };
 
-    return { props: { initialDisplayPosts, posts, pagination } };
+    return { props: { posts, pagination } };
 };
 
 export default Blog;
