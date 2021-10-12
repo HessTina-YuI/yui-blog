@@ -31,6 +31,7 @@ export interface IFrontMatterAttribute {
     date?: string | null;
     hero?: string;
     tags?: Array<string>;
+    summary?: string;
 }
 
 const root = process.cwd();
