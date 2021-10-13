@@ -3,7 +3,7 @@ const colors = require('tailwindcss/colors');
 
 module.exports = {
     mode: 'jit',
-    purge: [ './pages/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './layouts/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}' ],
+    purge: ['./pages/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './layouts/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'],
     darkMode: 'class', // or 'media' or 'class'
     theme: {
         extend: {
@@ -20,9 +20,9 @@ module.exports = {
                             position: 'relative',
                             color: theme('colors.blue.500'),
                             '&:hover': {
-                                color: theme('colors.blue.600'),
+                                color: theme('colors.blue.600')
                             },
-                            code: { color: theme('colors.blue.400') },
+                            code: { color: theme('colors.blue.400') }
                         },
                         h1: {
                             fontWeight: '700',
@@ -147,7 +147,7 @@ module.exports = {
     },
     variants: {
         extend: {},
-        typography: [ 'dark' ]
+        typography: ['dark']
     },
-    plugins: [ require('@tailwindcss/typography') ]
+    plugins: [require('@tailwindcss/typography'), require('@tailwindcss/line-clamp')]
 };

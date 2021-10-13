@@ -28,6 +28,14 @@
         overscroll-behavior-y: none;
     }
 
+    .bg-l-mask {
+        background: linear-gradient(65deg, transparent, white 80%);
+    }
+
+    .bg-r-mask {
+        background: linear-gradient(105deg, white 20%, transparent);
+    }
+
     .tooltip {
         padding: 0 1rem !important;
         border-radius: 1rem !important;

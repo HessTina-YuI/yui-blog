@@ -1,30 +1,12 @@
 import { useEffect, useState } from 'react';
 import { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { motion } from 'framer-motion';
 import PageLayout from '@/layouts/PageLayout';
 import SectionContainer from '@/components/SectionContainer';
-import Link from '@/components/Link';
 import { getAllFilesFrontMatter, IFrontMatterAttribute } from '@/lib/mdx';
+import Card from '@/components/Card';
 
-const variants = {
-    initial: {
-        y: -10,
-        opacity: 0
-    },
-    show: (i: number) => ({
-        y: 0,
-        opacity: 1,
-        transition: {
-            delay: i * 0.4,
-            duration: 1
-        }
-    })
-};
-
-const colors = ['#FF008C', '#D309E1', '#9C1AFF', '#7700FF', '#4400FF'];
-
-export const POSTS_PER_PAGE = 4;
+export const POSTS_PER_PAGE = 5;
 
 // @ts-ignore
 const Blog: NextPage = ({ posts, pagination }) => {
@@ -69,19 +51,7 @@ const Blog: NextPage = ({ posts, pagination }) => {
                 <div className="w-full xl:w-2/3 grid grid-cols-1">
                     {
                         list.map((value, index) => {
-                            return (
-                                <Link href={`/blog/${value.slug}`} key={value.slug}>
-                                    <motion.div className="w-full h-60 p-2 my-2 rounded-xl shadow-lg"
-                                                style={{ backgroundColor: colors[index % 5] }}
-                                                custom={index}
-                                                initial="initial"
-                                                animate="show"
-                                                exit="show"
-                                                variants={variants}>
-                                        {value.slug}
-                                    </motion.div>
-                                </Link>
-                            );
+                            return <Card key={value.slug} index={index} post={value} url={`/blog/${value.slug}`}/>;
                         })
                     }
                 </div>
@@ -106,8 +76,8 @@ const Blog: NextPage = ({ posts, pagination }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-    // const posts = await getAllFilesFrontMatter('blog');
-    const posts = [{ slug: 'a' }, { slug: 'b' }, { slug: 'c' }, { slug: 'd' }, { slug: 'e' }, { slug: 'f' }, { slug: 'g' }, { slug: 'h' }, { slug: 'i' }];
+    const posts = await getAllFilesFrontMatter('blog');
+    // const posts = [{ slug: 'a' }, { slug: 'b' }, { slug: 'c' }, { slug: 'd' }, { slug: 'e' }, { slug: 'f' }, { slug: 'g' }, { slug: 'h' }, { slug: 'i' }];
     const pagination = {
         currentPage: 1,
         totalPages: Math.ceil(posts.length / POSTS_PER_PAGE),
