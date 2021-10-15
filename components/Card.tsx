@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import chroma from 'chroma-js';
 import Link from '@/components/Link';
 import { IFrontMatterAttribute } from '@/lib/mdx';
 
@@ -30,9 +31,7 @@ interface ContentProps {
     hover: boolean;
 }
 
-const colors = ['#33425B', '#5BAAEC', '#526ED0', '#484CB0'];
-
-const Card: React.FC<CardProps> = ({ ...reset }) => {
+const Card: React.FC<CardProps> = ({ index = 0, ...reset }) => {
 
     const [hover, setHover] = useState<boolean>(false);
 
@@ -47,7 +46,7 @@ const Card: React.FC<CardProps> = ({ ...reset }) => {
     return (
         <Link href={reset.url}>
             <motion.div className="w-full h-60 my-2 bg-white rounded-xl shadow-lg overflow-hidden"
-                        custom={reset.index}
+                        custom={index}
                         initial="initial"
                         animate="show"
                         exit="show"
@@ -55,7 +54,7 @@ const Card: React.FC<CardProps> = ({ ...reset }) => {
                         onHoverStart={hoverStart}
                         onHoverEnd={hoverEnd}>
                 {
-                    reset.index % 2 == 0 ?
+                    index % 2 == 0 ?
                         <RightContent url={reset.url} hover={hover} post={reset.post}/> :
                         <LeftContent url={reset.url} hover={hover} post={reset.post}/>
                 }
@@ -82,12 +81,7 @@ const RightContent: React.FC<ContentProps> = ({ ...reset }) => {
                 </div>
                 <div className="mt-2">
                     {
-                        post.tags?.map((value, index) => {
-                            return <span key={index} className="text-sm mr-2 px-2 py-1 rounded-lg text-white"
-                                         style={{ backgroundColor: colors[index] }}>
-                                {value}
-                            </span>;
-                        })
+                        post.tags?.map((value, index) => <Tag key={index}>{value}</Tag>)
                     }
                 </div>
                 <p className="w-full h-20 mt-4 leading-relaxed line-clamp-3" style={{ textIndent: '2rem' }}>
@@ -119,12 +113,7 @@ const LeftContent: React.FC<ContentProps> = ({ ...reset }) => {
                 </div>
                 <div className="mt-2">
                     {
-                        post.tags?.map((value, index) => {
-                            return <span key={index} className="text-sm mr-2 px-2 py-1 rounded-lg text-white"
-                                         style={{ backgroundColor: colors[index] }}>
-                                {value}
-                            </span>;
-                        })
+                        post.tags?.map((value, index) => <Tag key={index}>{value}</Tag>)
                     }
                 </div>
                 <p className="w-full h-20 mt-4 leading-relaxed line-clamp-3" style={{ textIndent: '2rem' }}>
@@ -136,6 +125,15 @@ const LeftContent: React.FC<ContentProps> = ({ ...reset }) => {
             </div>
         </div>
     );
+};
+
+const Tag: React.FC = ({ children }) => {
+    const [color] = useState<string>(chroma.random().css());
+
+    return <span className="text-sm mr-2 px-2 py-1 rounded-lg text-white"
+                 style={{ backgroundColor: color }}>
+        {children}
+    </span>;
 };
 
 export default Card;

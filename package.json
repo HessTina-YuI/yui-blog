@@ -15,6 +15,7 @@
     "@tailwindcss/typography": "^0.4.1",
     "add": "^2.0.6",
     "boxicons": "^2.0.9",
+    "chroma-js": "^2.1.2",
     "date-fns": "^2.24.0",
     "esbuild": "^0.12.28",
     "framer-motion": "^4.1.17",
@@ -45,6 +46,7 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^11.1.0",
+    "@types/chroma-js": "^2.1.3",
     "@types/react": "17.0.19",
     "@types/react-scroll": "^1.8.3",
     "autoprefixer": "^10.3.2",
