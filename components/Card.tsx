@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import chroma from 'chroma-js';
+import { IoCalendar, IoPencil, IoTime } from 'react-icons/io5';
 import Link from '@/components/Link';
 import { IFrontMatterAttribute } from '@/lib/mdx';
 
@@ -67,6 +68,8 @@ const RightContent: React.FC<ContentProps> = ({ ...reset }) => {
 
     const post: IFrontMatterAttribute = reset.post;
 
+    console.log(post);
+
     return (
         <div className="w-full h-full relative overflow-hidden flex">
             <div className="w-2/5 h-full transition-transform overflow-hidden">
@@ -87,8 +90,13 @@ const RightContent: React.FC<ContentProps> = ({ ...reset }) => {
                 <p className="w-full h-20 mt-4 leading-relaxed line-clamp-3" style={{ textIndent: '2rem' }}>
                     {post.summary}
                 </p>
-                <div>
-                    test test
+                <div className="mt-4 text-sm text-gray-500 flex items-center">
+                    <IoCalendar/>
+                    <span className="ml-2 mr-4">{post.date}</span>
+                    <IoPencil/>
+                    <span className="ml-2 mr-4">{(post.readingTime.words / 1000).toFixed(1)}k 字</span>
+                    <IoTime/>
+                    <span className="ml-2 mr-4">{Math.ceil(post.readingTime.minutes)} 分钟</span>
                 </div>
             </div>
         </div>
@@ -98,6 +106,8 @@ const RightContent: React.FC<ContentProps> = ({ ...reset }) => {
 const LeftContent: React.FC<ContentProps> = ({ ...reset }) => {
 
     const post: IFrontMatterAttribute = reset.post;
+
+    console.log(post);
 
     return (
         <div className="w-full h-full relative overflow-hidden flex flex-row-reverse">
@@ -119,8 +129,13 @@ const LeftContent: React.FC<ContentProps> = ({ ...reset }) => {
                 <p className="w-full h-20 mt-4 leading-relaxed line-clamp-3" style={{ textIndent: '2rem' }}>
                     {post.summary}
                 </p>
-                <div>
-                    test test
+                <div className="mt-4 text-sm text-gray-500 flex items-center">
+                    <IoCalendar/>
+                    <span className="ml-2 mr-4">{post.date}</span>
+                    <IoPencil/>
+                    <span className="ml-2 mr-4">{(post.readingTime.words / 1000).toFixed(1)}k 字</span>
+                    <IoTime/>
+                    <span className="ml-2 mr-4">{Math.ceil(post.readingTime.minutes)} 分钟</span>
                 </div>
             </div>
         </div>

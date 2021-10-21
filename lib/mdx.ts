@@ -118,7 +118,7 @@ export const getFileBySlug = async (type: string, slug: string): Promise<IBlogAt
         mdxSource: code,
         toc,
         frontMatter: {
-            readingTime: readingTime(code),
+            readingTime: readingTime(source),
             slug: slug,
             fileName: fs.existsSync(mdxPath) ? `${slug}.mdx` : `${slug}.md`,
             ...frontmatter,
@@ -145,6 +145,7 @@ export const getAllFilesFrontMatter = async (folder: string): Promise<IFrontMatt
         const { data: frontmatter } = matter(source);
 
         allFrontMatter.push({
+            readingTime: readingTime(source),
             ...frontmatter,
             slug: formatSlug(fileName),
             date: frontmatter.date ? format(new Date(frontmatter.date), 'yyyy-MM-dd') : null

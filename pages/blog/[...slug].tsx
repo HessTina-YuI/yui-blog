@@ -48,7 +48,7 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
     useEffect(() => {
         const options = {
             strings: [post.frontMatter.title],
-            typeSpeed: 100,
+            typeSpeed: 80,
             backSpeed: 50,
             shuffle: true,
             loop: true
@@ -69,7 +69,7 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
                  style={{ height: '60vh', zIndex: '-10' }}>
                 <Image src={post.frontMatter.hero ?? ''} alt="hero" layout="fill" objectFit="cover"
                        objectPosition="top"/>
-                <div className="text-5xl text-white z-0">
+                <div className="text-6xl text-white z-0">
                     <span ref={el}/>
                 </div>
                 <div className="text-base text-white flex absolute bottom-10 z-0">
@@ -80,7 +80,7 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
                         <span>文本字数约为 {(post.frontMatter.readingTime.words / 1000).toFixed(1)}k 字</span>
                     </div>
                     <div>
-                        <span>阅读时长约为 {(post.frontMatter.readingTime.minutes).toFixed(0)} 分钟</span>
+                        <span>阅读时长约为 {Math.ceil(post.frontMatter.readingTime.minutes)} 分钟</span>
                     </div>
                 </div>
             </div>
