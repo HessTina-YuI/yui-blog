@@ -143,7 +143,7 @@ const LeftContent: React.FC<ContentProps> = ({ ...reset }) => {
 };
 
 const Tag: React.FC = ({ children }) => {
-    const [color] = useState<string>(chroma.random().css());
+    const [color] = useState<string>(chroma(chroma.random()).darken(2).css());
 
     return <span className="text-sm mr-2 px-2 py-1 rounded-lg text-white"
                  style={{ backgroundColor: color }}>
