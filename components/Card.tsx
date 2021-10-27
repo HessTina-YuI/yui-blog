@@ -46,7 +46,7 @@ const Card: React.FC<CardProps> = ({ index = 0, ...reset }) => {
 
     return (
         <Link href={reset.url}>
-            <motion.div className="w-full h-60 my-2 bg-white rounded-xl shadow-lg overflow-hidden"
+            <motion.div className="w-full h-full bg-white rounded-xl shadow-lg overflow-hidden"
                         custom={index}
                         initial="initial"
                         animate="show"
@@ -68,8 +68,6 @@ const RightContent: React.FC<ContentProps> = ({ ...reset }) => {
 
     const post: IFrontMatterAttribute = reset.post;
 
-    console.log(post);
-
     return (
         <div className="w-full h-full relative overflow-hidden flex">
             <div className="w-2/5 h-full transition-transform overflow-hidden">
@@ -78,7 +76,7 @@ const RightContent: React.FC<ContentProps> = ({ ...reset }) => {
                      style={{ backgroundImage: 'url(/static/images/2021-02-20-01.png)' }}/>
             </div>
             <div className="w-2/5 h-full bg-l-mask absolute top-0 left-0 z-10"/>
-            <div className="w-3/5 h-full pl-4">
+            <div className="w-3/5 h-full px-4">
                 <div className="text-3xl mt-6">
                     {post.title}
                 </div>
@@ -106,8 +104,6 @@ const RightContent: React.FC<ContentProps> = ({ ...reset }) => {
 const LeftContent: React.FC<ContentProps> = ({ ...reset }) => {
 
     const post: IFrontMatterAttribute = reset.post;
-
-    console.log(post);
 
     return (
         <div className="w-full h-full relative overflow-hidden flex flex-row-reverse">
