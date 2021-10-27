@@ -50,15 +50,15 @@ const Blog: NextPage<BlogProps> = ({ posts, pagination }) => {
 
     const prev = () => {
         if (currentPage > 1) {
+            window.scrollTo({ top: 0, behavior: 'auto' });
             setCurrentPage(currentPage - 1);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 
     const next = () => {
         if (currentPage < pagination.totalPages) {
+            window.scrollTo({ top: 0, behavior: 'auto' });
             setCurrentPage(currentPage + 1);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 
@@ -127,7 +127,7 @@ const Blog: NextPage<BlogProps> = ({ posts, pagination }) => {
 export const getStaticProps: GetStaticProps = async () => {
     const a = await getAllFilesFrontMatter('blog');
 
-    const posts = [...a, ...a, ...a]
+    const posts = [...a, ...a, ...a];
 
     const pagination = {
         currentPage: 1,
