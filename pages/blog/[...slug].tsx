@@ -85,18 +85,22 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
                 </div>
             </div>
             <div className="w-full py-10 pl-20 flex justify-center bg-gray-100">
-                <article className="w-3/5 prose">
-                    <MDXLayoutRenderer
-                        toc={post.toc}
-                        mdxSource={post.mdxSource}
-                        frontMatter={post.frontMatter}
-                        prev={prev}
-                        next={next}/>
-                </article>
-                <div className="ml-12 w-1/5 relative">
-                    <TOCComponent
-                        className="h-96 overflow-hidden overflow-y-scroll sticky top-4 hidden lg:block prime-scroll-theme"
-                        toc={post.toc}/>
+                <div className="w-3/5 bg-white rounded-xl py-10 flex justify-center">
+                    <article className="prose">
+                        <MDXLayoutRenderer
+                            toc={post.toc}
+                            mdxSource={post.mdxSource}
+                            frontMatter={post.frontMatter}
+                            prev={prev}
+                            next={next}/>
+                    </article>
+                </div>
+                <div className="ml-12 w-1/4 relative">
+                    <div className="h-[500px] pl-5 py-5 rounded-xl bg-white sticky top-4">
+                        <TOCComponent
+                            className="h-full overflow-hidden overflow-y-scroll hidden lg:block prime-scroll-theme"
+                            toc={post.toc}/>
+                    </div>
                 </div>
             </div>
             <SkipTool showHeight={400}
