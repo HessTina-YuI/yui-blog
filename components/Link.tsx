@@ -1,5 +1,4 @@
 import Link, { LinkProps } from 'next/link';
-import React from 'react';
 
 const CustomLink: React.FC<LinkProps> = ({ href, ...rest }) => {
     const localHref = href.toString();

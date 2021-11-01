@@ -41,6 +41,10 @@ module.exports = {
                         'h4,h5,h6': {
                             color: theme('colors.gray.900')
                         },
+                        pre: {
+                            padding: 0,
+                            backgroundColor: 'transparent'
+                        },
                         figure: {
                             margin: 0,
                             figcaption: {
@@ -103,6 +107,10 @@ module.exports = {
                         },
                         'h4,h5,h6': {
                             color: theme('colors.gray.100')
+                        },
+                        pre: {
+                            padding: 0,
+                            backgroundColor: 'transparent'
                         },
                         figure: {
                             margin: 0,

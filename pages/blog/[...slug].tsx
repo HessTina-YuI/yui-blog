@@ -64,12 +64,12 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
 
     return (
         <PostLayout>
-            <div className="w-full sticky top-0 bg-cover relative flex justify-center items-center"
-                // @ts-ignore
-                 style={{ height: '60vh', zIndex: '-10' }}>
-                <Image src={post.frontMatter.hero ?? ''} alt="hero" layout="fill" objectFit="cover"
-                       objectPosition="top"/>
-                <div className="text-6xl text-white z-0">
+            <div className="w-full h-[60vh] sticky top-0 z-[-10] bg-cover flex justify-center items-center">
+                <div className="w-full h-full relative">
+                    <Image src={post.frontMatter.hero ?? ''} alt="hero" layout="fill" objectFit="cover"
+                           objectPosition="top"/>
+                </div>
+                <div className="text-6xl text-white absolute z-0">
                     <span ref={el}/>
                 </div>
                 <div className="text-base text-white flex absolute bottom-10 z-0">
@@ -86,7 +86,7 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
             </div>
             <div className="w-full py-10 pl-20 flex justify-center bg-gray-100">
                 <div className="w-3/5 bg-white rounded-xl py-10 flex justify-center">
-                    <article className="prose">
+                    <article className="w-full prose">
                         <MDXLayoutRenderer
                             toc={post.toc}
                             mdxSource={post.mdxSource}
@@ -96,7 +96,7 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
                     </article>
                 </div>
                 <div className="ml-12 w-1/4 relative">
-                    <div className="h-[500px] pl-5 py-5 rounded-xl bg-white sticky top-4">
+                    <div className="max-h-[500px] pl-5 py-5 rounded-xl bg-white sticky top-4">
                         <TOCComponent
                             className="h-full overflow-hidden overflow-y-scroll hidden lg:block prime-scroll-theme"
                             toc={post.toc}/>

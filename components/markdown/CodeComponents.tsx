@@ -1,22 +1,15 @@
 import React, { useRef } from 'react';
 import { IoCopy, IoExpand } from 'react-icons/io5';
 import toast from 'react-hot-toast';
+import { IProps } from '@/interface/IProps';
 
-const CodeComponents: React.FC = ({ children }) => {
+interface ICodeComponentsProps extends IProps {
+    language: string;
+}
 
-    const textInput = useRef<HTMLPreElement>(null);
+const CodeComponents: React.FC<ICodeComponentsProps> = ({ className, language, ...rest }) => {
 
-    const language: string = (() => {
-        // @ts-ignore
-        const name: string[] = children.props.className ? children.props.className.split(' ') : [];
-        for (const temp of name) {
-            if (temp.indexOf('language-') != -1) {
-                return temp.substring(9, temp.length);
-            }
-        }
-
-        return '';
-    })();
+    const textInput = useRef<HTMLDivElement>(null);
 
     const notify = () => toast('功能还在施工中');
 
@@ -26,6 +19,14 @@ const CodeComponents: React.FC = ({ children }) => {
             toast('复制到剪贴板');
         }
     };
+
+    // if (language === 'github') {
+    //     // @ts-ignore
+    //     const repo = children.props.children.props.children.toString().split('https://github.com/')[1];
+    //     setRepo(repo);
+    //
+    //     return <div>{github?.name}</div>;
+    // }
 
     return (
         <figure className="rounded-lg overflow-hidden">
@@ -41,9 +42,9 @@ const CodeComponents: React.FC = ({ children }) => {
                     <IoExpand className="hover:cursor-pointer" onClick={notify}/>
                 </div>
             </figcaption>
-            <pre ref={textInput} style={{ borderRadius: 0, backgroundColor: '#262626' }}>
-                {children}
-            </pre>
+            <div ref={textInput} style={{ padding: '0 1rem 1rem 1rem', borderRadius: 0, backgroundColor: '#262626' }}>
+                {rest.children}
+            </div>
         </figure>
     );
 };
