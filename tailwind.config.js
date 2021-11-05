@@ -43,7 +43,7 @@ module.exports = {
                         },
                         pre: {
                             padding: 0,
-                            backgroundColor: 'transparent'
+                            borderRadius: '15px'
                         },
                         figure: {
                             margin: 0,
@@ -110,7 +110,7 @@ module.exports = {
                         },
                         pre: {
                             padding: 0,
-                            backgroundColor: 'transparent'
+                            borderRadius: '15px'
                         },
                         figure: {
                             margin: 0,

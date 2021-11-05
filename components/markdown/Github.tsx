@@ -11,35 +11,40 @@ interface IGithubRepoAttribute {
     };
 }
 
-const GithubComponents: React.FC = ({ ...rest }) => {
+const Github: React.FC = ({ children }) => {
 
     const [github, setGithub] = useState<IGithubRepoAttribute>();
 
     useEffect(() => {
         // @ts-ignore
-        const repo: string = rest.children.props.children.split('https://github.com/')[1];
+        const repo: string = children.props.children.split('https://github.com/')[1];
         getGitHubRepoStats(repo).then(result => setGithub(result)).catch(err => console.error(err));
 
-    }, []);
+        // @ts-ignore
+    }, [children.props.children]);
 
     return (
         <div className="w-full h-48 rounded-2xl border-2 flex overflow-hidden">
             <div className="w-2/3 h-full text-black mx-4 relative">
                 <div className="w-full h-10 ml-4 mt-4 text-2xl font-bold">
-                    {github?.name}
+                    {github?.name ?? ''}
                 </div>
                 <div className="w-full mt-1 whitespace-normal leading-6 line-clamp-3"
                      style={{ textIndent: '3rem' }}>
-                    {github?.description}
+                    {github?.description ?? ''}
                 </div>
                 <div className="w-full absolute bottom-4 left-2 flex items-center">
                     <RiGithubFill className="text-2xl mr-2"/>
-                    <span>{github?.html_url}</span>
+                    <span>{github?.html_url ?? ''}</span>
                 </div>
             </div>
             <div className="w-1/3 h-full relative">
-                <Image src={github?.owner.avatar_url ?? ''} alt="avatar" layout="fill" objectFit="cover"
-                       objectPosition="center"/>
+                {
+                    github?.owner && github?.owner.avatar_url &&
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={github?.owner.avatar_url} alt="avatars"
+                         style={{ margin: 0 }}/>
+                }
             </div>
         </div>
     );
@@ -54,5 +59,4 @@ const getGitHubRepoStats = (repo: string): Promise<IGithubRepoAttribute> => {
     }).then((response) => response.json());
 };
 
-
-export default GithubComponents;
+export default Github;

@@ -48,12 +48,6 @@ export const formatSlug = (slug: string): string => {
     return slug.replace(/\.(mdx|md)/, '');
 };
 
-export const dateSortDesc = (a: string, b: string): number => {
-    if (a > b) return -1;
-    if (a < b) return 1;
-    return 0;
-};
-
 export const getFileBySlug = async (type: string, slug: string): Promise<IBlogAttribute> => {
     const mdxPath = path.join(root, 'data', type, `${slug}.mdx`);
     const mdPath = path.join(root, 'data', type, `${slug}.md`);
@@ -108,7 +102,8 @@ export const getFileBySlug = async (type: string, slug: string): Promise<IBlogAt
         esbuildOptions: (options) => {
             options.loader = {
                 ...options.loader,
-                '.ts': 'tsx'
+                '.ts': 'tsx',
+                '.js': 'jsx'
             };
             return options;
         }

@@ -65,10 +65,8 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
     return (
         <PostLayout>
             <div className="w-full h-[60vh] sticky top-0 z-[-10] bg-cover flex justify-center items-center">
-                <div className="w-full h-full relative">
-                    <Image src={post.frontMatter.hero ?? ''} alt="hero" layout="fill" objectFit="cover"
-                           objectPosition="top"/>
-                </div>
+                <Image src={post.frontMatter.hero ?? ''} alt="hero" layout="fill" objectFit="cover"
+                       objectPosition="top"/>
                 <div className="text-6xl text-white absolute z-0">
                     <span ref={el}/>
                 </div>
@@ -96,10 +94,9 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
                     </article>
                 </div>
                 <div className="ml-12 w-1/4 relative">
-                    <div className="max-h-[500px] pl-5 py-5 rounded-xl bg-white sticky top-4">
-                        <TOCComponent
-                            className="h-full overflow-hidden overflow-y-scroll hidden lg:block prime-scroll-theme"
-                            toc={post.toc}/>
+                    <div className="max-h-[500px] pl-5 py-3 rounded-xl bg-white sticky top-4 overflow-hidden overflow-y-scroll
+                                    prime-scroll-theme">
+                        <TOCComponent className="h-full hidden lg:block" toc={post.toc}/>
                     </div>
                 </div>
             </div>
