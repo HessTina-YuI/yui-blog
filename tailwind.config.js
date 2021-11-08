@@ -6,6 +6,9 @@ module.exports = {
     purge: ['./pages/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './layouts/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'],
     darkMode: 'class', // or 'media' or 'class'
     theme: {
+        fontFamily: {
+            roboto: ['Roboto', 'Verdana', 'Raleway', 'PingFang SC', 'Microsoft Yahei', 'sans-serif']
+        },
         extend: {
             colors: {
                 primary: colors.teal,

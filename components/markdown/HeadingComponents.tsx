@@ -1,4 +1,5 @@
 import React, { Fragment, ReactElement } from 'react';
+import { HiLink } from 'react-icons/hi';
 
 enum levelEnum {
     h1 = 'h1', h2 = 'h2', h3 = 'h3', h4 = 'h4', h5 = 'h5', h6 = 'h6'
@@ -32,9 +33,7 @@ const HeadingComponents: React.FC<HeadingProps> = ({ level, id, children }) => {
 
     return (
         <HTMLHeading id={id} level={level}>
-            <div className="relative">
-                <span className="absolute -left-14 text-blue-400 hover:cursor-pointer hover:text-blue-400"
-                      onClick={() => scrollToAnchor(id ?? '')}>{level.toUpperCase()}</span>
+            <div className="relative w-full flex justify-between">
                 {
                     content.map(((value, index) => {
                         if (typeof (value) === 'string') {
@@ -44,6 +43,8 @@ const HeadingComponents: React.FC<HeadingProps> = ({ level, id, children }) => {
                         return <a key={index} href={value.props.href}>{value.props.children}</a>;
                     }))
                 }
+                <span className="text-3xl font-black text-blue-400 hover:cursor-pointer hover:text-blue-400"
+                      onClick={() => scrollToAnchor(id ?? '')}><HiLink/></span>
             </div>
         </HTMLHeading>
     );

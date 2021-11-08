@@ -82,9 +82,9 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
                     </div>
                 </div>
             </div>
-            <div className="w-full py-10 pl-20 flex justify-center bg-gray-100">
-                <div className="w-3/5 bg-white rounded-xl py-10 flex justify-center">
-                    <article className="w-full prose">
+            <div className="w-full py-10 pl-0 flex justify-center bg-gray-100">
+                <div className="w-full lg:w-3/5 flex justify-center">
+                    <article className="w-full prose bg-white rounded-xl p-10" style={{ maxWidth: '100%' }}>
                         <MDXLayoutRenderer
                             toc={post.toc}
                             mdxSource={post.mdxSource}
@@ -93,10 +93,10 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
                             next={next}/>
                     </article>
                 </div>
-                <div className="ml-12 w-1/4 relative">
+                <div className="ml-12 w-1/4 relative hidden lg:block">
                     <div className="max-h-[500px] pl-5 py-3 rounded-xl bg-white sticky top-4 overflow-hidden overflow-y-scroll
                                     prime-scroll-theme">
-                        <TOCComponent className="h-full hidden lg:block" toc={post.toc}/>
+                        <TOCComponent className="h-full" toc={post.toc}/>
                     </div>
                 </div>
             </div>

@@ -32,7 +32,7 @@ class MyDocument extends Document {
                         crossOrigin="anonymous"
                     />
                 </Head>
-                <body className="antialiased text-black bg-gray-100 overscroll-y-none">
+                <body className="antialiased text-black bg-gray-100 overscroll-y-none font-roboto">
                 <Main/>
                 <NextScript/>
                 </body>
