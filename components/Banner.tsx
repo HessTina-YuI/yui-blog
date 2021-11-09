@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+import useMeasure from 'react-use-measure';
+import { motion } from 'framer-motion';
 import TaskInterval from '@/lib/task-interval';
 import { IProps } from '@/interface/IProps';
 import Image from '@/components/Image';
@@ -16,6 +18,7 @@ const Banner: React.FC<BannerProps> = ({ images = [], className }) => {
 
     const intervalRef = useRef<TaskInterval>();
     const [selectImg, setSelectImg] = useState<number>(0);
+    const [ref, { width }] = useMeasure();
 
     useEffect(() => {
         intervalRef.current = new TaskInterval(() => {
@@ -37,14 +40,20 @@ const Banner: React.FC<BannerProps> = ({ images = [], className }) => {
     };
 
     return (
-        <div className={`${className} pb-7`}>
-            <div className="w-full h-full relative">
+        <div className={`${className} pb-7`} ref={ref}>
+            <div className="w-full h-full relative overflow-hidden rounded-2xl">
                 {
-                    images?.map((item, index) =>
-                        <div key={index} className={`w-full h-full rounded-2xl bg-no-repeat bg-center absolute overflow-hidden
-                                transition-opacity duration-700 ${selectImg === index ? 'opacity-100' : 'opacity-0'}`}>
-                            <Image src={item.image ?? ''} alt={item.alt ?? ''} layout="fill" objectFit="cover"/>
-                        </div>
+                    images?.map((item, index) => (
+                            <motion.div key={index}
+                                        className="w-full h-full  bg-no-repeat bg-center absolute transition-opacity duration-700"
+                                        style={{ x: index * width }}
+                                        animate={{
+                                            x: (index - selectImg) * width,
+                                            transition: { type: 'linear', duration: 1 }
+                                        }}>
+                                <Image src={item.image ?? ''} alt={item.alt ?? ''} layout="fill" objectFit="cover"/>
+                            </motion.div>
+                        )
                     )
                 }
             </div>
