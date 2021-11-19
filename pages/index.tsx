@@ -5,17 +5,11 @@ import SectionContainer from '@/components/SectionContainer';
 import Banner from '@/components/Banner';
 import CountCard from '@/components/CountCard';
 import Tip from '@/components/Tip';
+import siteMetaData from '@/data/siteMetaData';
 
 const Home: NextPage = () => {
 
-    const images = [
-        {
-            image: '/static/images/2021-02-17-01.png'
-        },
-        {
-            image: '/static/images/2021-02-17-02.png'
-        }
-    ];
+    const images = siteMetaData.banner;
 
     return (
         <PageLayout>

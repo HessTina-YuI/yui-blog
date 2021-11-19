@@ -5,6 +5,8 @@ import PageLayout from '@/layouts/PageLayout';
 import SectionContainer from '@/components/SectionContainer';
 import { getAllFilesFrontMatter, IFrontMatterAttribute } from '@/lib/mdx';
 import Card from '@/components/Card';
+import Image from '@/components/Image';
+import siteMetaData from '@/data/siteMetaData';
 
 export const POSTS_PER_PAGE = 5;
 
@@ -107,8 +109,11 @@ const Blog: NextPage<BlogProps> = ({ posts, pagination }) => {
                     </div>
                     <aside className="w-1/3 pl-10 pr-2 hidden xl:block">
                         <div className="w-full bg-white rounded-2xl pt-1">
-                            <div className={`w-60 h-60 bg-red-700 mx-auto rounded-2xl transition-all duration-500 
-                                            ${displayTop ? '-mt-32' : 'mt-10'}`}/>
+                            <div className={`w-60 h-60 mx-auto rounded-2xl transition-all duration-500 overflow-hidden
+                                            ${displayTop ? '-mt-32' : 'mt-10'}`}>
+                                <Image src={siteMetaData.avatar} alt="avatar" layout="fill"
+                                       objectFit="cover"/>
+                            </div>
                             <div className="my-8 text-3xl flex justify-center">
                                 HessTina YuI
                             </div>
@@ -125,9 +130,7 @@ const Blog: NextPage<BlogProps> = ({ posts, pagination }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-    const a = await getAllFilesFrontMatter('blog');
-
-    const posts = [...a, ...a, ...a];
+    const posts = await getAllFilesFrontMatter('blog');
 
     const pagination = {
         currentPage: 1,
