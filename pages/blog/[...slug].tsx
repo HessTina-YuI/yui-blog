@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Typed from 'typed.js';
+import { IoCalendar, IoPencil, IoTime } from 'react-icons/io5';
 import {
     formatSlug,
     getAllFilesFrontMatter,
@@ -67,10 +68,11 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
             <div className="w-full h-[60vh] sticky top-0 z-[-10] bg-cover flex justify-center items-center">
                 <Image src={post.frontMatter.hero ?? ''} alt="hero" layout="fill" objectFit="cover"
                        objectPosition="top"/>
-                <div className="text-6xl text-white absolute z-0">
+                <div className="text-3xl md:text-6xl text-white absolute z-0">
                     <span ref={el}/>
                 </div>
-                <div className="text-base text-white flex absolute bottom-10 z-0">
+                {/* 电脑端 */}
+                <div className="hidden md:flex text-base text-white absolute bottom-10 z-0">
                     <div>
                         <span>文章发布于 {post.frontMatter.date}</span>
                     </div>
@@ -79,6 +81,21 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
                     </div>
                     <div>
                         <span>阅读时长约为 {Math.ceil(post.frontMatter.readingTime.minutes)} 分钟</span>
+                    </div>
+                </div>
+                {/* 手机端 */}
+                <div className="flex md:hidden text-xs text-white absolute bottom-10 z-0">
+                    <div className="flex">
+                        <IoCalendar className="text-sm md:text-lg mr-1"/>
+                        <span>{post.frontMatter.date}</span>
+                    </div>
+                    <div className="mx-10 flex">
+                        <IoPencil className="text-sm md:text-lg mr-1"/>
+                        <span>{(post.frontMatter.readingTime.words / 1000).toFixed(1)}k 字</span>
+                    </div>
+                    <div className="flex">
+                        <IoTime className="text-sm md:text-lg mr-1"/>
+                        <span>{Math.ceil(post.frontMatter.readingTime.minutes)} 分钟</span>
                     </div>
                 </div>
             </div>

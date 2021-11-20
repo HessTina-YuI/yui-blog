@@ -81,7 +81,7 @@ const Navbar: React.FC = ({ children }) => {
     return (
         <>
             <nav
-                className="h-full fixed top-0 left-0 z-20 bg-white shadow-lg text-black transition-all duration-500"
+                className="hidden md:block h-full fixed top-0 left-0 z-20 bg-white shadow-lg text-black transition-all duration-500"
                 style={{ width: `${navWidth}rem` }} onMouseOver={navMouseOver} onMouseLeave={navMouseLeave}>
                 <div className="w-full h-32 mt-2 mb-4">
                     <div className="my-2 pl-1.5 rounded-lg flex items-center hover:cursor-pointer"/>
@@ -96,7 +96,7 @@ const Navbar: React.FC = ({ children }) => {
                 </ul>
             </nav>
             <div
-                className={`w-12 h-12 rounded-xl rotate-45 transition-all duration-500 ease-in-out hover:cursor-pointer
+                className={`hidden md:block w-12 h-12 rounded-xl rotate-45 transition-all duration-500 ease-in-out hover:cursor-pointer
                         fixed z-30 top-16 bg-white ${navMouseOn ? '-translate-x-7' : '-translate-x-14'}`}
                 style={{ left: `${navWidth}rem` }} onMouseOver={navMouseOver} onMouseLeave={navMouseLeave}
                 onClick={navOpenClick}>
@@ -108,8 +108,13 @@ const Navbar: React.FC = ({ children }) => {
                     }
                 </div>
             </div>
-            <main className="relative transition-all duration-500"
+            {/* 电脑端 */}
+            <main className="hidden md:block relative transition-all duration-500"
                   style={{ width: `calc(100% - ${navWidth}rem)`, left: `${navWidth}rem` }}>
+                {children}
+            </main>
+            {/* 手机端 */}
+            <main className="block md:hidden w-full relative transition-all duration-500">
                 {children}
             </main>
         </>
