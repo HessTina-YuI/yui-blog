@@ -102,7 +102,7 @@ Can-Set-Native-Method-Prefix：是否能够创建 native 类型的方法
 打包 agent，我们可以得到叫 `permain-agent.jar` 的文件，我们可以把这个 jar 包拷贝到要运行的 java 应用下面。
 当然，也能用绝对路径或者相对路径应用这个 jar 包。
 
-![](https://cdn.jsdelivr.net/gh/Trafalgar-YuI/img-bed@master/img/2021-11-20-02.jpg)
+![](https://cdn.jsdelivr.net/gh/Trafalgar-YuI/img-bed@master/img/2021-11-20-02.png)
 
 我把 agent 放在的 `/Users/yui/program/OpenSource/java-learn` 目录下方，vm 参数增加了 `-javaagent:premain-agent.jar`。
 启动项目，结果如下
@@ -112,7 +112,143 @@ premain start
 hello world
 ```
 
+## agentmain 方法
+
+上面启动 agent 的方式，需要启动 java 项目时带上 jvm 的参数 `-javaagent`。那正在运行程序如果要加上 agent，就只能停止重新启动了么？
+JDK1.6 增加了 attach 的方式，在程序启动时可以直接通过 PID 的形式挂载到程序上。下面是两个入口函数
+
+```java
+public static void agentmain(String agentArgs);
+
+public static void agentmain(String args, Instrumentation inst);
+```
+
+我们现在按照相同的方式编写代码
+
+```java
+public class AgentMain {
+
+    public static void agentmain(String agentArgs, Instrumentation inst) {
+        System.out.println("agentmain start");
+
+    }
+
+}
+```
+
+是不是和 premain 很相似，现在我们看看 pom.xml 中需要增加的内容
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>com.sun</groupId>
+        <artifactId>tools</artifactId>
+        <version>1.8</version>
+        <scope>system</scope>
+        <systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
+    </dependency>
+</dependencies>
+```
+
+我们在 attach 的过程中会用上 com.sun.tools 包中的 VirtualMachine 方法，这是个非 jdk 原生方法，但是包会下载到本地电脑 jdk 的路径下，
+所以就直接调用本地的 jar 即可，`${JAVA_HOME}` 会匹配本地的环境变量叫 `JAVA_HOME` 的变量。
+
+```xml
+<build>
+    <finalName>attach</finalName>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.2.0</version>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <addClasspath>true</addClasspath>
+                    </manifest>
+                    <manifestEntries>
+                        <Agent-Class>yui.hesstina.AgentMain</Agent-Class>
+                        <Can-Redefine-Classes>true</Can-Redefine-Classes>
+                        <Can-Retransform-Classes>true</Can-Retransform-Classes>
+                        <Can-Set-Native-Method-Prefix>true</Can-Set-Native-Method-Prefix>
+                    </manifestEntries>
+                </archive>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+```
+
+这次使用的是 `Agent-Class` 标签引入入口函数。编译打包。
+
+现在我们要写一个调用 attach 方法的主函数，区别于 agent
+
+```java
+public class AttachTest {
+
+    public static void main(String[] args) throws Exception {
+        VirtualMachine vm = VirtualMachine.attach("1111");
+        vm.loadAgent("/Users/yui/program/OpenSource/java-learn/agentmain-agent.jar");
+    }
+
+}
+```
+通过 `VirtualMachine` 获取到实例以后，加载 `agentmain-agent` 包并 attach 到指定的 PID 上，
+`VirtualMachine.attach("1111")` 可以通过 jps 命令查看正在运行的 java 项目，然后填进去即可
 
 
+```java {5} showLineNumbers
+public class Test {
 
+    public static void main(String[] args) throws InterruptedException {
+        System.out.println("hello world");
+        Thread.sleep(10000);
+    }
+
+}
+```
+在原来的 java 项目中增加了第 5 行，让程序更持续一点，方便 attach 验证
+
+```shell
+hello world
+agentmain start
+```
+
+至此，完成了 attach 的方法。
+现在我们来优化一下 `AttachTest` 的方法
+
+```java
+public class AttachTest {
+
+    public static void main(String[] args) throws Exception {
+        List<VirtualMachineDescriptor> vmList = VirtualMachine.list();
+
+        String pid = vmList.stream()
+                .filter(v -> v.displayName().equals("yui.hesstina.Test"))
+                .map(VirtualMachineDescriptor::id)
+                .findFirst()
+                .orElse("");
+
+        if ("".equals(pid)) {
+            System.out.println("未启动 Test");
+            return;
+        }
+
+        System.out.println("pid: " + pid);
+
+        VirtualMachine vm = VirtualMachine.attach(pid);
+        vm.loadAgent("/Users/yui/program/OpenSource/java-learn/agentmain-agent.jar");
+    }
+
+}
+```
+
+通过 `VirtualMachine.list()` 方法可以获得所有正在执行的 jave 虚拟机的信息。然后拿到想要的 pid，直接绑定即可。
+
+## premain 和 agentmain 的优缺点
+
+1. premain 必须在程序启动时显式的通过 -javaagent 命令调用，而 agentmain 可以在程序启动后调用。
+2. premain 在发生异常时，如果没有捕获会中断主程序的执行。
+3. 如果需要对字节码增强，premain 会在程序启动时，就能预先对已经加载的类进行增强，而 agentmain 只能在类再次被调用时增强。
+一个是启动时比较耗时，一个是运行时会额外耗时。
 
