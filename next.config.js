@@ -5,7 +5,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 /** @type {import('next').NextConfig} */
 module.exports = withBundleAnalyzer({
     images: {
-        domains: ['assets.vercel.com', 'avatars.githubusercontent.com'],
+        domains: ['assets.vercel.com', 'avatars.githubusercontent.com', 'cdn.jsdelivr.net'],
         formats: ['image/avif', 'image/webp'],
     },
     reactStrictMode: true,
