@@ -24,6 +24,18 @@
         @apply rounded-full bg-blue-400
     }
 
+    .prime-scroll-h-theme {
+
+    }
+
+    .prime-scroll-h-theme::-webkit-scrollbar {
+        @apply h-2
+    }
+
+    .prime-scroll-h-theme::-webkit-scrollbar-thumb {
+        @apply rounded-full bg-blue-400
+    }
+
     .overscroll-y-none {
         overscroll-behavior-y: none;
     }

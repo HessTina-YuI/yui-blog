@@ -43,7 +43,13 @@ const CodeComponents: React.FC = ({ children }) => {
                         </div>
                 </figcaption>
                 <div ref={textInput}
-                     style={{ padding: '0 1rem 1rem 1rem', borderRadius: 0, backgroundColor: '#262626' }}>
+                     className="prime-scroll-h-theme"
+                     style={{
+                         padding: '0 1rem 0 1rem',
+                         borderRadius: 0,
+                         backgroundColor: '#262626',
+                         overflowX: 'scroll'
+                     }}>
                     {children}
                 </div>
             </figure>

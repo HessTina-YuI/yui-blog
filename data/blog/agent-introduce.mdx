@@ -1,0 +1,118 @@
+---
+title: '初识 Java Agent'
+date: 2021-11-20 07:21:00
+lastmod: 2021-11-20 07:21:00
+tags: ['Java', 'Agent']
+hero: /static/images/2021-02-25-01.jpg
+summary: 'java agent 的简单介绍及使用'
+---
+
+# 初识 Java Agent
+
+## 概念
+
+Java Agent 是在 JDK1.5 中引入的，能够在 main 函数启动时进行拦截，达到现在所说的 AOP 的思想。是在 JVM 层面做的拦截，也能在其之上实现一些字节码增强的功能。
+也是现阶段 APM 监控 Java 常用的手段之一。
+
+![](https://cdn.jsdelivr.net/gh/Trafalgar-YuI/img-bed@master/img/2021-11-20-01.jpg)
+
+## premain 方法
+
+```java
+public static void premain(String agentArgs);
+
+public static void premain(String args, Instrumentation inst);
+```
+
+上面的两个方法都是 agent 的入口函数，他们会在引用 agent 的 java 程序启动时先执行。Instrumentation 是后续做字节码增加的关键对象。
+官方的 javadoc 中写道，他具有监控、分析、日志等功能，是不会修改应用程序的状态和行为的。但是实际上，为了达到监控的目的，是会修改字节码等操作，
+虽然不会直接去改变应用程序的行为，但是是可以做到的。
+
+现在我们开始实操
+
+1. 准备一个简单的 java 应用，我会习惯用 maven 创建应用
+```java
+package yui.hesstina;
+
+public class Test {
+
+    public static void main(String[] args) {
+        System.out.println("hello world");
+    }
+
+}
+```
+
+2. 开始写 agent 部分
+
+先创建一个 maven 项目，创建好 agent 的入口函数
+
+```java
+package yui.hesstina;
+
+import java.lang.instrument.Instrumentation;
+
+public class PremainAgent {
+
+    public static void premain(String agentArgs, Instrumentation inst) {
+        System.out.println("premain start");
+    }
+
+}
+```
+
+打开 pom.xml 文件，我们需要打包我们的 agent 项目，这里使用 maven-jar-plugin 插件
+
+```xml
+<build>
+    <finalName>premain-agent</finalName>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.2.0</version>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <addClasspath>true</addClasspath>
+                    </manifest>
+                    <manifestEntries>
+                        <Premain-Class>yui.hesstina.PremainAgent</Premain-Class>
+                        <Can-Redefine-Classes>true</Can-Redefine-Classes>
+                        <Can-Retransform-Classes>true</Can-Retransform-Classes>
+                        <Can-Set-Native-Method-Prefix>true</Can-Set-Native-Method-Prefix>
+                    </manifestEntries>
+                </archive>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+```
+
+:::info
+Premain-Class：agent 入口函数的所在的类（类的全路径），包含了 permain 方法
+
+Can-Redefine-Classes：是否可以重新定义类
+
+Can-Retransform-Classes：是否可以重新加载转换后的类，实现字节码增加的关键
+
+Can-Set-Native-Method-Prefix：是否能够创建 native 类型的方法
+:::
+
+打包 agent，我们可以得到叫 `permain-agent.jar` 的文件，我们可以把这个 jar 包拷贝到要运行的 java 应用下面。
+当然，也能用绝对路径或者相对路径应用这个 jar 包。
+
+![](https://cdn.jsdelivr.net/gh/Trafalgar-YuI/img-bed@master/img/2021-11-20-02.jpg)
+
+我把 agent 放在的 `/Users/yui/program/OpenSource/java-learn` 目录下方，vm 参数增加了 `-javaagent:premain-agent.jar`。
+启动项目，结果如下
+
+```shell
+premain start
+hello world
+```
+
+
+
+
+

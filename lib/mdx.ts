@@ -29,6 +29,7 @@ export interface IFrontMatterAttribute {
     fileName: string;
     title?: string;
     date?: string | null;
+    lastmod?: string | null;
     hero?: string;
     tags?: string[];
     summary?: string;
@@ -117,7 +118,8 @@ export const getFileBySlug = async (type: string, slug: string): Promise<IBlogAt
             slug: slug,
             fileName: fs.existsSync(mdxPath) ? `${slug}.mdx` : `${slug}.md`,
             ...frontmatter,
-            date: frontmatter.date ? format(new Date(frontmatter.date), 'yyyy-MM-dd') : null
+            date: frontmatter.date ? format(new Date(frontmatter.date), 'yyyy-MM-dd') : null,
+            lastmod: frontmatter.lastmod ? format(new Date(frontmatter.lastmod), 'yyyy-MM-dd') : null
         }
     };
 };
@@ -143,7 +145,8 @@ export const getAllFilesFrontMatter = async (folder: string): Promise<IFrontMatt
             readingTime: readingTime(source),
             ...frontmatter,
             slug: formatSlug(fileName),
-            date: frontmatter.date ? format(new Date(frontmatter.date), 'yyyy-MM-dd') : null
+            date: frontmatter.date ? format(new Date(frontmatter.date), 'yyyy-MM-dd') : null,
+            lastmod: frontmatter.lastmod ? format(new Date(frontmatter.lastmod), 'yyyy-MM-dd') : null
         });
     });
 
