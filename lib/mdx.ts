@@ -146,10 +146,11 @@ export const getAllFilesFrontMatter = async (folder: string): Promise<IFrontMatt
             readingTime: readingTime(source),
             ...frontmatter,
             slug: formatSlug(fileName),
+            originDate: frontmatter.date,
             date: frontmatter.date ? format(new Date(frontmatter.date), 'yyyy-MM-dd') : null,
             lastmod: frontmatter.lastmod ? format(new Date(frontmatter.lastmod), 'yyyy-MM-dd') : null
         });
     });
 
-    return allFrontMatter.sort(compareDesc);
+    return allFrontMatter.sort((v1, v2) => compareDesc(new Date(v1.originDate), new Date(v2.originDate)));
 };
