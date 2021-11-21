@@ -1,0 +1,161 @@
+---
+title: TypeScript 实现 AOP
+date: 2021-11-21 18:22:00
+lastmod: 2021-11-21 18:22:00
+tags: ['TypeScript', '装饰圈', 'AOP']
+hero: https://cdn.jsdelivr.net/gh/Trafalgar-YuI/img-bed@master/img/2021-02-25-01.jpg
+summary: TypeScript 的装饰器的使用，及如何运用装饰器实现 AOP
+---
+
+# TypeScript 实现 AOP
+
+## 我对 AOP 的理解
+
+AOP 一词是我在成为 Java 工程师，使用 Spring 框架的时候知道的词。翻译过来就是面向切面编程，假如有公共的方法的处理逻辑，但是又不想硬编码到方法里。
+
+例如：
+
+```java
+class Test {
+    public void A() {
+    }
+
+    public void B() {
+    }
+}
+```
+
+有两个方法，在调用 A() 和 B() 时，想要在调用之前打个日志，虽然可以直接在方法里写 `log.info()`，
+但是内容都是一样或者有标准模板的话，又感觉多此一举了，虽然可以用设计模式等发生做到，这里接不介绍了，不然就跑题了。
+
+```java {3,7}
+class Test {
+    public void A() {
+        log.info("xxxxx");
+    }
+
+    public void B() {
+        log.info("xxxxx");
+    }
+}
+```
+
+## 新建 TypeScript 项目
+
+言归正传，我在 TypeScript 中知道了一个语法和 Java 的注解很相似，叫做装饰器。所以就想试试如何运用装饰器实现 AOP
+
+先初始化一个 TypeScript 项目
+
+```typescript
+class Test {
+
+    public run(p1: object, p2: object) {
+        return 'Hello World';
+    }
+
+}
+
+const t = new Test();
+t.run({ a: 1 }, { b: 2 });
+```
+
+因为装饰器还处于草案的阶段，需要在配置文件中开启，打开 `tsconfig.json` 文件，并打开把 `experimentalDecorators` 参数设置为 true
+
+```json
+{
+    "experimentalDecorators": true
+}
+```
+
+接下来会用上方法装饰器和参数装饰器
+
+```TypeScript
+const Trace: MethodDecorator = (target: Object, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+    const method = descriptor.value;
+
+    descriptor.value = function (...args: any[]) {
+        console.log('调用方法前');
+        const result = method.apply(this, args);
+        console.log('调用方法后');
+    };
+};
+
+const TraceParam = (name: string): ParameterDecorator => (target: Object, propertyKey: string | symbol, parameterIndex: number) => {
+   console.log(`参数值名：${name}, 参数位置：${parameterIndex}`);
+};
+```
+
+会得到结果
+
+```shell
+参数值名：param2, 参数位置：1
+参数值名：param1, 参数位置：0
+调用方法前
+调用方法后
+```
+
+这里就是 AOP 的雏形了，能够在方法的调用前后形成切面。
+
+我们现在需要装上一个包，当然你也能自己使用原型链做，这里为了方便一下
+
+```
+npm install reflect-metadata
+```
+
+我们需要把参数装饰器获得的参数名和参数位置放入原型链中，然后在方法装饰器中取出来
+
+```TypeScript
+import 'reflect-metadata';
+
+interface ParamAttribute {
+    name: string;
+    index: number;
+}
+
+const Trace: MethodDecorator = (target: Object, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+    const method = descriptor.value;
+    const paramAttributes: ParamAttribute[] = Reflect.getMetadata('trace', target, propertyKey) || [];
+    const names: string[] = paramAttributes
+        .sort((v1, v2) => v1.index - v2.index)
+        .map(v => v.name);
+
+    let obj: { [key: string]: any } = {};
+
+    descriptor.value = function (...args: any[]) {
+        args.forEach((v, i) => {
+            obj[names[i]] = { v, ...obj[names[i]] };
+        });
+
+        console.log('调用方法前', obj);
+        const result = method.apply(this, args);
+        console.log('调用方法后', result);
+    };
+};
+
+const TraceParam = (name: string): ParameterDecorator => (target: Object, propertyKey: string | symbol, parameterIndex: number) => {
+    let paramAttributes: ParamAttribute[] = Reflect.getMetadata('trace', target, propertyKey) || [];
+    paramAttributes.push({ name, index: parameterIndex });
+
+    Reflect.defineMetadata('trace', paramAttributes, target, propertyKey);
+};
+
+class Test {
+
+    @Trace
+    public run(@TraceParam('param1') p1: object, @TraceParam('param2') p2: object) {
+        return 'Hello World';
+    }
+
+}
+
+const t = new Test();
+t.run({ a: 1 }, { b: 2 });
+```
+
+最后结果：
+
+```shell
+调用方法前 { param1: { v: { a: 1 } }, param2: { v: { b: 2 } } }
+调用方法后 Hello World
+```
+
