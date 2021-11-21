@@ -68,6 +68,7 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
             <div className="w-full h-[60vh] sticky top-0 z-[-10] bg-cover flex justify-center items-center">
                 <Image src={post.frontMatter.hero ?? ''} alt="hero" layout="fill" objectFit="cover"
                        objectPosition="top"/>
+                <div className="w-full h-full bg-black opacity-10 absolute"/>
                 <div className="text-3xl md:text-6xl text-white absolute z-0">
                     <span ref={el}/>
                 </div>

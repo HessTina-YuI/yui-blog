@@ -44,7 +44,7 @@ const Banner: React.FC<BannerProps> = ({ images = [], className }) => {
                                             opacity: index == selectImg ? 1 : 0,
                                             transition: { type: 'easy-in-out', duration: .25 }
                                         }}>
-                                <Image src={item ?? ''} alt="" layout="fill" objectFit="cover"/>
+                                <Image src={item ?? ''} alt="" layout="fill" objectFit="cover" objectPosition="center"/>
                             </motion.div>
                         )
                     )

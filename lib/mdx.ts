@@ -30,6 +30,7 @@ export interface IFrontMatterAttribute {
     title?: string;
     date?: string | null;
     lastmod?: string | null;
+    thumbnail?: string;
     hero?: string;
     tags?: string[];
     summary?: string;

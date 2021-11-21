@@ -73,7 +73,7 @@ const RightContent: React.FC<ContentProps> = ({ ...reset }) => {
             <div className="w-2/5 h-full transition-transform overflow-hidden">
                 <div className={`w-full h-full transition-transform duration-500 bg-no-repeat bg-center
                                      ${reset.hover ? 'scale-110 -rotate-1' : ''}`}
-                     style={{ backgroundImage: 'url(/static/images/2021-02-20-01.png)' }}/>
+                     style={{ backgroundImage: `url(${post.thumbnail})` }}/>
             </div>
             <div className="w-2/5 h-full bg-l-mask absolute top-0 left-0 z-10"/>
             <div className="w-3/5 h-full px-4">
@@ -110,7 +110,7 @@ const LeftContent: React.FC<ContentProps> = ({ ...reset }) => {
             <div className="w-2/5 h-full transition-transform overflow-hidden">
                 <div className={`w-full h-full transition-transform duration-500 bg-no-repeat bg-center
                                      ${reset.hover ? 'scale-110 rotate-1' : ''}`}
-                     style={{ backgroundImage: 'url(/static/images/2021-02-20-01.png)' }}/>
+                     style={{ backgroundImage: `url(${post.thumbnail})` }}/>
             </div>
             <div className="w-2/5 h-full bg-r-mask absolute top-0 right-0 z-10"/>
             <div className="w-3/5 h-full pl-6">
