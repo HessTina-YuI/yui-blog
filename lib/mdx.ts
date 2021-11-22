@@ -154,3 +154,32 @@ export const getAllFilesFrontMatter = async (folder: string): Promise<IFrontMatt
 
     return allFrontMatter.sort((v1, v2) => compareDesc(new Date(v1.originDate), new Date(v2.originDate)));
 };
+
+export const getFilesFrontMatterByFileNames = async (dir: string, fileNames: string[]): Promise<IFrontMatterAttribute[]> => {
+    const files = fileNames.map(v => path.join(root, 'data', dir, v));
+
+    const allFrontMatter: any[] = [];
+
+    files.forEach((file: string, index: number) => {
+        // Replace is needed to work on Windows
+        const fileName = fileNames[index];
+
+        // Remove Unexpected File
+        if (path.extname(fileName) !== '.md' && path.extname(fileName) !== '.mdx') {
+            return;
+        }
+        const source = fs.readFileSync(file, 'utf8');
+        const { data: frontmatter } = matter(source);
+
+        allFrontMatter.push({
+            readingTime: readingTime(source),
+            ...frontmatter,
+            slug: formatSlug(fileName),
+            originDate: frontmatter.date,
+            date: frontmatter.date ? format(new Date(frontmatter.date), 'yyyy-MM-dd') : null,
+            lastmod: frontmatter.lastmod ? format(new Date(frontmatter.lastmod), 'yyyy-MM-dd') : null
+        });
+    });
+
+    return allFrontMatter;
+};

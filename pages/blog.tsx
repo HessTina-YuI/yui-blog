@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
 import { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
+import { RiSearch2Line } from 'react-icons/ri';
 import PageLayout from '@/layouts/PageLayout';
 import SectionContainer from '@/components/SectionContainer';
-import { getAllFilesFrontMatter, IFrontMatterAttribute } from '@/lib/mdx';
+import { getAllFilesFrontMatter, getFilesFrontMatterByFileNames, IFrontMatterAttribute } from '@/lib/mdx';
 import Card from '@/components/Card';
 import Image from '@/components/Image';
 import siteMetaData from '@/data/siteMetaData';
+import toast from 'react-hot-toast';
 
 export const POSTS_PER_PAGE = 5;
 
 interface BlogProps {
     posts: IFrontMatterAttribute[];
+    tops: IFrontMatterAttribute[];
     pagination: {
         currentPage: number;
         totalPages: number;
@@ -19,7 +22,7 @@ interface BlogProps {
     };
 }
 
-const Blog: NextPage<BlogProps> = ({ posts, pagination }) => {
+const Blog: NextPage<BlogProps> = ({ posts, tops, pagination }) => {
 
     const [list, setList] = useState<IFrontMatterAttribute[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(pagination.currentPage);
@@ -36,11 +39,11 @@ const Blog: NextPage<BlogProps> = ({ posts, pagination }) => {
         if (page > 1 && page <= pagination.totalPages) {
             setCurrentPage(page);
         }
-    }, [router.query.page]);
+    }, [pagination.totalPages, router.query.page]);
 
     useEffect(() => {
         setList(posts.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE));
-    }, [currentPage]);
+    }, [currentPage, posts]);
 
     useEffect(() => {
         window.addEventListener('scroll', handlerScroller);
@@ -64,6 +67,13 @@ const Blog: NextPage<BlogProps> = ({ posts, pagination }) => {
         }
     };
 
+    const topClick = (slug: string) => {
+        router.push('/blog/[...slug]', '/blog/' + slug)
+            .then(r => console.error(r));
+    };
+
+    const notify = () => toast('功能还在施工中');
+
     const handlerScroller = () => {
         const scroller = document.scrollingElement;
         if (!scroller) {
@@ -80,7 +90,13 @@ const Blog: NextPage<BlogProps> = ({ posts, pagination }) => {
     return (
         <PageLayout>
             <SectionContainer>
-                <div className="w-full h-[140px]"/>
+                <div className="w-full h-[140px] flex items-end">
+                    <div onClick={notify}
+                         className="w-80 h-10 mb-6 rounded-full bg-white shadow-sm flex items-center hover:cursor-pointer">
+                        <RiSearch2Line className="ml-3 text-2xl"/>
+                        <span className="ml-4 text-sm text-gray-400">搜索文章标题</span>
+                    </div>
+                </div>
                 <div className="w-full h-full flex">
                     <div className="w-full h-64 xl:w-2/3 grid grid-cols-1">
                         {
@@ -117,8 +133,20 @@ const Blog: NextPage<BlogProps> = ({ posts, pagination }) => {
                             <div className="my-8 text-3xl flex justify-center">
                                 HessTina YuI
                             </div>
-                            <div className="w-full h-60 bg-blue-100 rounded-b-2xl">
-
+                            <div className="w-full px-8 pt-4 pb-8 bg-blue-100 rounded-b-2xl">
+                                <div className="mb-4 border-dashed">
+                                    置顶文章
+                                </div>
+                                {
+                                    tops.map((value, index) => (
+                                            <div key={index} onClick={() => topClick(value.slug)}
+                                                 className="w-full py-4 rounded-xl bg-white flex justify-center transition-shadow duration-300
+                                                    hover:cursor-pointer hover:shadow-lg">
+                                                {value.title}
+                                            </div>
+                                        )
+                                    )
+                                }
                             </div>
                         </div>
                     </aside>
@@ -132,13 +160,15 @@ const Blog: NextPage<BlogProps> = ({ posts, pagination }) => {
 export const getStaticProps: GetStaticProps = async () => {
     const posts = await getAllFilesFrontMatter('blog');
 
+    const tops = await getFilesFrontMatterByFileNames('blog', siteMetaData.topBlog);
+
     const pagination = {
         currentPage: 1,
         totalPages: Math.ceil(posts.length / POSTS_PER_PAGE),
         total: posts.length
     };
 
-    return { props: { posts, pagination } };
+    return { props: { posts, tops, pagination } };
 };
 
 export default Blog;
