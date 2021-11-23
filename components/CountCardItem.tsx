@@ -30,15 +30,15 @@ const CountCardItem: React.FC<CountCardItemProps> = ({ className, ...props }) =>
                 </div>
                 <span className="mr-4 text-2xl xl:text-4xl">{props.count}</span>
             </div>
-            <div className="mt-2 font-bold text-xl">
+            <div className="mt-3 font-bold text-xl">
                 {props.name}
             </div>
-            <div className="w-full h-1/3 mt-1 text-xs overflow-hidden">
+            <div className="w-full h-1/3 mt-2 text-sm leading-6 overflow-hidden" style={{ textIndent: '1.5rem' }}>
                 {props.description}
             </div>
             <Link href={props.url ? props.url : '#'}>
                 <div
-                    className="w-20 h-8 mt-2 bg-blue-500 rounded-full float-right">
+                    className="w-20 h-8 bg-blue-500 rounded-full float-right">
                     <motion.div className="w-full h-full flex justify-center items-center"
                                 whileHover="hover"
                                 variants={variants}>

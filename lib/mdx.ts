@@ -155,6 +155,14 @@ export const getAllFilesFrontMatter = async (folder: string): Promise<IFrontMatt
     return allFrontMatter.sort((v1, v2) => compareDesc(new Date(v1.originDate), new Date(v2.originDate)));
 };
 
+export const getAllFilesCount = async (folder: string): Promise<number> => {
+    const prefixPaths = path.join(root, 'data', folder);
+
+    const files = getAllFilesRecursively(prefixPaths);
+
+    return files ? files.length : 0;
+};
+
 export const getFilesFrontMatterByFileNames = async (dir: string, fileNames: string[]): Promise<IFrontMatterAttribute[]> => {
     const files = fileNames.map(v => path.join(root, 'data', dir, v));
 
