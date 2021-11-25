@@ -40,7 +40,7 @@ const CountCard: React.FC<CountCardProps> = ({ className, ...reset }) => {
         <div className={`${className} flex`}>
             {
                 card?.map(((value, index) =>
-                        <CountCardItem key={value.id} {...value}
+                        <CountCardItem key={value.name} {...value}
                                        className={`${index !== 0 ? 'ml-6' : ''}`}/>
                 ))
             }
