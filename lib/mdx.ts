@@ -87,7 +87,7 @@ export const getFileBySlug = async (type: string, slug: string): Promise<IBlogAt
             options.remarkPlugins = [
                 ...(options.remarkPlugins ?? []),
                 remarkGfm,
-                [remarkFootnotes, { inlineNotes: false }],
+                [remarkFootnotes, { inlineNotes: true }],
                 remarkMath,
                 remarkDirective,
                 [remarkTocHeadings, { exportRef: toc }],

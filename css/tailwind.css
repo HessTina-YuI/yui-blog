@@ -56,4 +56,20 @@
     @variants dark {
 
     }
+
+    @variants responsive {
+        .masonry-3 {
+            column-gap: 1.5em;
+            column-count: 3;
+        }
+
+        .masonry-2 {
+            column-gap: 1.5em;
+            column-count: 2;
+        }
+
+        .break-inside {
+            break-inside: avoid;
+        }
+    }
 }

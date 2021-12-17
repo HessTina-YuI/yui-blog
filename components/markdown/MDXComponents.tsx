@@ -4,6 +4,7 @@ import { IBlogAttribute, IFrontMatterAttribute } from '@/lib/mdx';
 import HeadingComponents from '@/components/markdown/HeadingComponents';
 import CodeComponents from '@/components/markdown/CodeComponents';
 import CustomLink from '@/components/Link';
+import Github from '@/components/markdown/Github';
 
 interface MDXLayoutRendererProps extends IBlogAttribute {
     prev?: IFrontMatterAttribute | null;
@@ -18,7 +19,8 @@ export const MDXComponents = {
     h5: (props: any) => <HeadingComponents level="h5" {...props}/>,
     h6: (props: any) => <HeadingComponents level="h6" {...props}/>,
     a: (props: any) => <CustomLink {...props}/>,
-    pre: (props: any) => <CodeComponents {...props}/>
+    pre: (props: any) => <CodeComponents {...props}/>,
+    Github: Github
 };
 
 export const MDXLayoutRenderer: React.FC<MDXLayoutRendererProps> = ({ mdxSource, ...rest }) => {

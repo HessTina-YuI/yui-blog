@@ -1,0 +1,122 @@
+---
+title: "博客的功能介绍"
+date: "2021-12-10 19:58:00"
+lastmod: "2021-12-10 19:58:00"
+tags: ["blog"]
+thumbnail: "https://cdn.jsdelivr.net/gh/HessTina-YuI/img-bed@master/img/2021-02-20-01.png"
+hero: "https://cdn.jsdelivr.net/gh/HessTina-YuI/img-bed@master/img/2021-02-25-01.jpg"
+summary: "博客中的文档的书写规范的介绍，mdx 语法的说明"
+---
+
+# 博客的功能介绍
+
+## 功能
+
+采用 mdx 而非 md 格式，可以在 mdx 中写 jsx 语法来实现更加自由的样式编写。
+
+### 标题名
+
+```
+---
+title:
+date:
+lastmod:
+tags:
+thumbnail:
+hero:
+summary:
+---
+```
+
+现在需要的参数有
+- title: 文章标题
+- date: 创建时间
+- lastmod: 最后修改时间
+- tag: 标签
+- thumbnail: 文章顶部图片
+- hero: 文章目录中显示的图片
+- summary: 总结
+
+### 引用
+
+:::info
+这是一个通知类型的引用
+:::
+
+通过 ::: 包裹住产生一个引用块，在 ::: 后面填写 none、info、warning、error 来展示四种样式
+
+```mdx
+:::info
+这是一个通知类型的引用
+:::
+```
+
+### 下标注释
+
+这是一个注释 [^note]
+
+[^note]: 跳转
+
+### 代码块
+
+```java {3,13-15} showLineNumbers
+public class SingletonTest {
+
+    public static void main(String[] args) {
+        System.out.println(Singleton.INSTANCE.getTest());
+        System.out.println(Singleton.INSTANCE.getTest());
+    }
+
+    public enum Singleton {
+        INSTANCE;
+
+        private final Test test;
+
+        Singleton() {
+            test = new Test();
+        }
+
+        public Test getTest() {
+            return test;
+        }
+    }
+
+    private static class Test {
+
+    }
+}
+```
+
+通过语言，{} 包裹要高亮的行（可不写），以及 `showLineNumbers` 显示行号（可不写）
+
+````
+```java {3,13-15} showLineNumbers
+```
+````
+
+### Github 块显示
+
+这里使用了 mdx 的特性，输入 jsx 语法
+
+<Github>https://github.com/HessTina-YuI/yui-blog</Github>
+
+```jsx
+<Github>https://github.com/HessTina-YuI/yui-blog</Github>
+```
+
+### 复选框
+
+使用 `- [ ]` 和 `- [x]` 语法创建复选框
+
+- [x] 已完成事项
+- [ ] 代办事项1
+- [ ] 代办事项2
+
+
+### 表格
+
+| Item     | Value    | Qty  |
+| :-------- | --------: | :----: |
+| Computer | 1600 USD | 5    |
+| Phone    | 12 USD   | 12   |
+| Pipe     | 1 USD    | 234  |

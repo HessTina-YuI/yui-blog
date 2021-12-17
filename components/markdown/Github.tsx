@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { RiGithubFill } from 'react-icons/ri';
-import { characterEntities } from 'character-entities';
-import star = characterEntities.star;
-import is from '@sindresorhus/is';
-import iterable = is.iterable;
 
 interface IGithubRepoAttribute {
     name: string;
@@ -90,7 +86,12 @@ const Github: React.FC = ({ children }) => {
                                 github?.owner && github?.owner.avatar_url &&
                                 // eslint-disable-next-line @next/next/no-img-element
                                 <img src={github?.owner.avatar_url} alt="avatars"
-                                     style={{ margin: 0, objectFit: 'cover', backgroundRepeat: 'no-repeat' }}/>
+                                     style={{
+                                         margin: 0,
+                                         objectFit: 'cover',
+                                         objectPosition: 'center',
+                                         backgroundRepeat: 'no-repeat'
+                                     }}/>
                             }
                         </div>
                     </motion.div> :

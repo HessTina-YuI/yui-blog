@@ -31,21 +31,6 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
     const el = useRef<HTMLDivElement>(null);
     const typed = useRef<Typed>(null);
 
-    const [footnotes, setFootnotes] = useState<string>('');
-
-    useEffect(() => {
-        setFootnotes('.footnote-back');
-    }, []);
-
-    useEffect(() => {
-        if (footnotes) {
-            const items = document.querySelectorAll(footnotes);
-            items.forEach((val) => {
-                val.innerHTML = '←';
-            });
-        }
-    }, [footnotes]);
-
     useEffect(() => {
         const options = {
             strings: [post.frontMatter.title],

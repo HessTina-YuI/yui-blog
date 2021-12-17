@@ -76,10 +76,38 @@ module.exports = {
                         'ul li:before': {
                             backgroundColor: theme('colors.gray.500')
                         },
+                        '.contains-task-list li:before': {
+                            backgroundColor: 'transparent',
+                            content: 'none !important'
+                        },
+                        'ul li *:last-child': {
+                            marginTop: 0,
+                            marginBottom: 0
+                        },
                         strong: { color: theme('colors.gray.600') },
                         blockquote: {
                             color: theme('colors.gray.900'),
                             borderLeftColor: theme('colors.gray.200')
+                        },
+                        table: {
+                            textAlign: 'left',
+                            borderCollapse: 'collapse',
+                            border: '1px solid #6cf'
+                        },
+                        'table th': {
+                            padding: '20px 10px !important',
+                            fontWeight: 'normal',
+                            color: '#039',
+                            textTransform: 'uppercase',
+                            borderRight: '1px solid #0865c2',
+                            borderTop: '1px solid #0865c2',
+                            borderLeft: '1px solid #0865c2',
+                            borderBottom: '1px dashed #0865c2'
+                        },
+                        'table td': {
+                            padding: '20px 10px !important',
+                            color: '#669',
+                            borderRight: '1px dashed #6cf'
                         }
                     }
                 },
