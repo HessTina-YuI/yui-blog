@@ -2,9 +2,13 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-    mode: 'jit',
-    purge: ['./pages/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './layouts/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'],
-    darkMode: 'class', // or 'media' or 'class'
+    content: [
+        './pages/**/*.{ts,tsx}',
+        './components/**/*.{ts,tsx}',
+        './components/**/**/*.{ts,tsx}',
+        './layouts/**/*.{ts,tsx}',
+        './lib/**/*.{ts,tsx}'
+    ],
     theme: {
         fontFamily: {
             roboto: ['Roboto', 'Verdana', 'Raleway', 'PingFang SC', 'Microsoft Yahei', 'sans-serif']
@@ -183,10 +187,6 @@ module.exports = {
                 }
             })
         }
-    },
-    variants: {
-        extend: {},
-        typography: ['dark']
     },
     plugins: [require('@tailwindcss/typography'), require('@tailwindcss/line-clamp')]
 };

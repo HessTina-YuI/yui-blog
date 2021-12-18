@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Typed from 'typed.js';
 import { IoCalendar, IoPencil, IoTime } from 'react-icons/io5';
@@ -34,8 +34,8 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
     useEffect(() => {
         const options = {
             strings: [post.frontMatter.title],
-            typeSpeed: 80,
-            backSpeed: 50,
+            typeSpeed: 120,
+            backSpeed: 80,
             shuffle: true,
             loop: true
         };

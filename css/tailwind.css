@@ -53,11 +53,11 @@
         border-radius: 1rem !important;
     }
 
-    @variants dark {
+    @layer dark {
 
     }
 
-    @variants responsive {
+    @layer components {
         .masonry-3 {
             column-gap: 1.5em;
             column-count: 3;
