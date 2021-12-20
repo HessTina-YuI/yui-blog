@@ -55,15 +55,23 @@ const Blog: NextPage<BlogProps> = ({ posts, tops, pagination }) => {
 
     const prev = () => {
         if (currentPage > 1) {
-            window.scrollTo({ top: 0, behavior: 'auto' });
-            setCurrentPage(currentPage - 1);
+            router.push(
+                { pathname: '/blog', query: { page: currentPage - 1 } },
+                undefined,
+                { scroll: true, shallow: true }
+            ).then(() => {
+            });
         }
     };
 
     const next = () => {
         if (currentPage < pagination.totalPages) {
-            window.scrollTo({ top: 0, behavior: 'auto' });
-            setCurrentPage(currentPage + 1);
+            router.push(
+                { pathname: '/blog', query: { page: currentPage + 1 } },
+                undefined,
+                { scroll: true, shallow: true }
+            ).then(() => {
+            });
         }
     };
 
@@ -125,7 +133,7 @@ const Blog: NextPage<BlogProps> = ({ posts, tops, pagination }) => {
                     </div>
                     <aside className="w-1/3 pl-10 pr-2 hidden xl:block">
                         <div className="w-full bg-white rounded-2xl pt-1">
-                            <div className={`w-60 h-60 mx-auto rounded-2xl transition-all duration-500 overflow-hidden
+                            <div className={`w-60 h-60 relative mx-auto rounded-2xl transition-all duration-500 overflow-hidden
                                             ${displayTop ? '-mt-32' : 'mt-10'}`}>
                                 <Image src={siteMetaData.avatar} alt="avatar" layout="fill"
                                        objectFit="cover"/>
@@ -141,7 +149,7 @@ const Blog: NextPage<BlogProps> = ({ posts, tops, pagination }) => {
                                     tops.map((value, index) => (
                                             <div key={index} onClick={() => topClick(value.slug)}
                                                  className="w-full py-4 rounded-xl bg-white flex justify-center transition-shadow duration-300
-                                                    hover:cursor-pointer hover:shadow-lg">
+                                                                    hover:cursor-pointer hover:shadow-lg">
                                                 {value.title}
                                             </div>
                                         )

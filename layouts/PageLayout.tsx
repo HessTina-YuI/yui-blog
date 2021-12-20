@@ -17,7 +17,7 @@ const PageLayout: React.FC = ({ children }) => {
             exit="exit"
             variants={variants}>
             <AnimatePresence initial={true}>
-                <Fragment key={useRouter().route}>
+                <Fragment key={useRouter().asPath}>
                     {children}
                 </Fragment>
             </AnimatePresence>

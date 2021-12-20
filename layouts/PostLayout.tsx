@@ -19,7 +19,7 @@ const PostLayout: React.FC<IProps> = ({ className, children }) => {
             exit="exit"
             variants={variants}>
             <AnimatePresence initial={true}>
-                <Fragment key={useRouter().route}>
+                <Fragment key={useRouter().asPath}>
                     {children}
                 </Fragment>
             </AnimatePresence>

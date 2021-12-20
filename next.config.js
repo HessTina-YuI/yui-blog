@@ -6,7 +6,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 module.exports = withBundleAnalyzer({
     images: {
         domains: ['assets.vercel.com', 'avatars.githubusercontent.com', 'cdn.jsdelivr.net'],
-        formats: ['image/avif', 'image/webp'],
+        formats: ['image/avif', 'image/webp']
     },
     reactStrictMode: true,
     pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
@@ -30,8 +30,8 @@ module.exports = withBundleAnalyzer({
                 'react/jsx-runtime.js': 'preact/compat/jsx-runtime',
                 react: 'preact/compat',
                 'react-dom/test-utils': 'preact/test-utils',
-                'react-dom': 'preact/compat',
-            })
+                'react-dom': 'preact/compat'
+            });
         }
 
         return config;
