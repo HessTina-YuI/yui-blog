@@ -43,8 +43,9 @@ const Blog: NextPage<BlogProps> = ({ post, prev, next }) => {
         // @ts-ignore
         typed.current = new Typed(el.current, options);
         return () => {
-            // @ts-ignore
-            typed.current.destroy();
+            if (typed.current) {
+                typed.current.destroy();
+            }
         };
     }, [post.frontMatter.title]);
 
