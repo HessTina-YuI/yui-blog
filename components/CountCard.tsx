@@ -23,7 +23,7 @@ const CountCard: React.FC<CountCardProps> = ({ className, ...reset }) => {
         }, {
             name: '故事',
             count: reset.storyCount,
-            description: '一些小 tips',
+            description: '一些记录、短句、感悟',
             icon: <RiBookFill/>,
             url: '/story'
         }, {

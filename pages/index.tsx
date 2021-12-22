@@ -7,6 +7,7 @@ import CountCard from '@/components/CountCard';
 import Tip from '@/components/Tip';
 import siteMetaData from '@/data/siteMetaData';
 import { getAllFilesCount } from '@/lib/mdx';
+import { getAllFiles, IMemoAttribute } from '@/lib/memo';
 
 interface HomeProps {
     blogCount: number;
@@ -35,9 +36,10 @@ const Home: NextPage<HomeProps> = ({ blogCount, storyCount, collectionCount }) =
 export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
-    const blogCount = await getAllFilesCount('blog');
+    const blogCount: number = await getAllFilesCount('blog');
 
-    const storyCount = 0;
+    const memo: IMemoAttribute[] = await getAllFiles('memo');
+    const storyCount = memo.length;
 
     const collectionCount = 0;
 
