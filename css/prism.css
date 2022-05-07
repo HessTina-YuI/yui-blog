@@ -45,7 +45,7 @@
 }
 
 .remark-director > p {
-    @apply text-xl my-2
+    @apply text-sm my-2
 }
 
 /* Code block styles */
